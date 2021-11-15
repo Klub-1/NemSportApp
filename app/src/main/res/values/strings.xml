@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">NemSport</string>
+    <string name="login">Log In</string>
+    <string name="register">Sign Up</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="OR">or</string>
+    <string name="title_activity_fragment_container">Hjem</string>
+    <string name="title_home">Hjem</string>
+    <string name="title_search">Søg</string>
+    <string name="title_profile">Profil</string>
+    <string name="create">Opret</string>
+    <string name="filter">Filter</string>
+    <string name="menu">Menu</string>
+    <string name="your_events">Dine events</string>
+    <string name="today">I dag</string>
+    <string name="tomorrow">I morgen</string>
+    <string name="register_guest">Sign Up som gæst</string>
+    <string name="register_member">Sign Up som medlem</string>
+    <string name="mail">Email</string>
+    <string name="participate">Tilmeldt!</string>
+    <string name="title_activity_create_event">Opret event</string>
+    <string name="team_name">Holdnavn</string>
+    <string name="description_of_event">Beskriv dit event</string>
+    <string name="when">Hvornår</string>
+</resources>
