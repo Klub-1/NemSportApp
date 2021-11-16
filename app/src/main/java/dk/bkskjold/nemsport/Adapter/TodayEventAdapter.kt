@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 
-class TodayEventAdapter(private val mList: List<EventModel>) : RecyclerView.Adapter<TodayEventAdapter.ViewHolder>() {
+class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.Adapter<TodayEventAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,17 +23,17 @@ class TodayEventAdapter(private val mList: List<EventModel>) : RecyclerView.Adap
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val event_model = mList[position]
+        val event = eventList[position]
 
         // sets the text to the textview from our itemHolder class
-        holder.timeView.text = event_model.time
+        holder.timeView.text = event.time
 
-        holder.titleView.text = event_model.title
+        holder.titleView.text = event.title
     }
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
-        return mList.size
+        return eventList.size
     }
 
     // Holds the views for adding it to image and text

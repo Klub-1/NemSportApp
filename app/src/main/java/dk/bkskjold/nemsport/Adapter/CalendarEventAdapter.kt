@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 
-class CalendarEventAdapter(private val mList: List<EventModel>) : RecyclerView.Adapter<CalendarEventAdapter.ViewHolder>() {
+class CalendarEventAdapter(private val eventList: List<EventModel>) : RecyclerView.Adapter<CalendarEventAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,16 +24,16 @@ class CalendarEventAdapter(private val mList: List<EventModel>) : RecyclerView.A
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val event_model = mList[position]
+        val event = eventList[position]
 
         // sets the text to the textview from our itemHolder class
-        holder.timeView.text = event_model.time
+        holder.timeView.text = event.time
 
-        holder.descView.text = event_model.desc
+        holder.descView.text = event.desc
 
-        holder.titleView.text = event_model.title
+        holder.titleView.text = event.title
 
-        if (event_model.participate){
+        if (event.participate){
             holder.acceptView.visibility = View.VISIBLE
             holder.imageView.setBackgroundResource(R.drawable.circle_imageview_green)
         }else{
@@ -45,7 +45,7 @@ class CalendarEventAdapter(private val mList: List<EventModel>) : RecyclerView.A
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
-        return mList.size
+        return eventList.size
     }
 
     // Holds the views for adding it to image and text
