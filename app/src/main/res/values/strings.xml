@@ -23,4 +23,6 @@
     <string name="team_name">Holdnavn</string>
     <string name="description_of_event">Beskriv dit event</string>
     <string name="when">Hvornår</string>
+    <string name="back">Tilbage</string>
+    <string name="your_calendar">Din kalender</string>
 </resources>

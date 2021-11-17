@@ -66,4 +66,6 @@ class HomeFragment : Fragment() {
         tomorrow_event_recyclerview.adapter = adapter
     }
 
+
+
 }
