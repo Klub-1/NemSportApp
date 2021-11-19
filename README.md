@@ -7,3 +7,7 @@ https://stackoverflow.com/questions/4038479/android-go-back-to-previous-activity
 
 ### Firebase Auth Theme
 https://stackoverflow.com/questions/44492655/customize-firebase-ui-auth-android
+
+
+## Calendar theme
+https://stackoverflow.com/questions/37301231/android-calendar-view-change-text-color

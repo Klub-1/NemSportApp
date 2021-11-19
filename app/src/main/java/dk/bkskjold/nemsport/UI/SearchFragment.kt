@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CalendarView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -29,6 +30,8 @@ class SearchFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_search, container, false)
+
+        val calendarViewSearch: CalendarView = view.findViewById(R.id.calendarViewSearch)
 
         val menuFab: FloatingActionButton = view.findViewById(R.id.menuFab)
         val createFab: FloatingActionButton = view.findViewById(R.id.createFab)
