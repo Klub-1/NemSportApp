@@ -1,3 +1,9 @@
+## Login i appen
+Det er muligt at lave sin egen konto.
+ - Skriv en tilfældig email
+ - Lav en adgangskode (Vi kan ikke se den)
+ - Vi sletter kontoen efter reviewet er overstået
+
 ## LINKS
 ### Recyclerview
 https://www.geeksforgeeks.org/android-recyclerview-in-kotlin/
