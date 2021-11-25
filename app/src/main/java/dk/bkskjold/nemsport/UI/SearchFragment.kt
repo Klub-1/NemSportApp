@@ -29,7 +29,7 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
+        val view = inflater.inflate(R.layout.fragment_calendar, container, false)
 
         val calendarViewSearch: CalendarView = view.findViewById(R.id.calendarViewSearch)
 

@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/searchFragment"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/title_search" />
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="@string/title_calendar" />
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_action_profile_light"

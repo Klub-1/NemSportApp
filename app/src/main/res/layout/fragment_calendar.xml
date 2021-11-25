@@ -7,45 +7,38 @@
     android:orientation="vertical"
     tools:context=".UI.SearchFragment">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical">
+        android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/topViewLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_border_bottom"
             android:orientation="vertical"
-            android:weightSum="2">
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_border_bottom"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <CalendarView
-                    android:id="@+id/calendarViewSearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:minDate="01/01/2021"
-                    android:theme="@style/CalenderViewCustom"
-                    android:dateTextAppearance="@style/CalenderViewDateCustomText"
-                    android:weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/calendarRV"
+            <CalendarView
+                android:id="@+id/calendarViewSearch"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:scrollbars="vertical">
+                android:minDate="01/01/2021"
+                android:theme="@style/CalenderViewCustom"
+                android:dateTextAppearance="@style/CalenderViewDateCustomText"
+                android:weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
 
-            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
-    </ScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/calendarRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/menuFab"

@@ -24,7 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="/private/var/folders/9k/x_1jt93d4xx6025pvvv9dgtm0000gn/T/baseline_more_horiz_24.xml" />
+                                                <entry key="imagePath" value="/private/var/folders/9k/x_1jt93d4xx6025pvvv9dgtm0000gn/T/baseline_calendar_today_24.xml" />
                                                 <entry key="opacityPercent" value="80" />
                                               </map>
                                             </option>
@@ -36,7 +36,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/more_horiz/baseline_more_horiz_24.xml" />
+                                                <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/calendar_today/baseline_calendar_today_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -68,7 +68,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_action_more_light" />
+                                      <entry key="outputName" value="ic_action_calendar_light" />
                                       <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>

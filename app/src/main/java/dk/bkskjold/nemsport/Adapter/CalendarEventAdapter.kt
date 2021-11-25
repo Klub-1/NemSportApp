@@ -36,9 +36,11 @@ class CalendarEventAdapter(private val eventList: List<EventModel>) : RecyclerVi
         if (event.participate){
             holder.acceptView.visibility = View.VISIBLE
             holder.imageView.setBackgroundResource(R.drawable.circle_imageview_green)
+            holder.imageView.setImageResource(R.drawable.ic_action_done_light)
         }else{
             holder.acceptView.visibility = View.GONE
             holder.imageView.setBackgroundResource(R.drawable.circle_imageview_red)
+            holder.imageView.setImageResource(R.drawable.ic_action_user_light)
         }
 
     }
