@@ -29,6 +29,12 @@
                 android:dateTextAppearance="@style/CalenderViewDateCustomText"
                 android:weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/calendarToggleCV"
+                android:layout_width="50dp"
+                android:layout_height="5dp"
+                android:layout_marginBottom="10dp"/>
+
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

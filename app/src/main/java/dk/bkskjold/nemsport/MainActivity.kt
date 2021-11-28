@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        signInLauncher.launch(signInIntent)
+        //signInLauncher.launch(signInIntent)
+        startActivity(Intent(this, FragmentContainerActivity::class.java))
 
 
 

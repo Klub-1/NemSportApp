@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -17,12 +18,31 @@ import java.util.ArrayList
 
 class SearchFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    /*
+    SETTINGS VAR AND VAL
+     */
+    private var FAB_IS_OPEN: Boolean = false
 
-    }
 
-    var FAB_IS_OPEN: Boolean = false
+    /*
+    VIEWS
+     */
+    private lateinit var eventRecyclerView: RecyclerView
+
+    private lateinit var menuFab: FloatingActionButton
+    private lateinit var createFab: FloatingActionButton
+    private lateinit var filterFab: FloatingActionButton
+
+    private lateinit var calendarViewSearch: CalendarView
+    private lateinit var calendarToggleCV: CardView
+
+    /*
+    RECYCLERVIEW
+     */
+    private lateinit var adapter: CalendarEventAdapter
+    private lateinit var eventList: ArrayList<EventModel>
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,12 +51,31 @@ class SearchFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_calendar, container, false)
 
-        val calendarViewSearch: CalendarView = view.findViewById(R.id.calendarViewSearch)
+        initViews(view)
+        createCalenderEvent(view)
+        fabHandler(view)
+        toggleCalenderVisibility(view)
 
-        val menuFab: FloatingActionButton = view.findViewById(R.id.menuFab)
-        val createFab: FloatingActionButton = view.findViewById(R.id.createFab)
-        val filterFab: FloatingActionButton = view.findViewById(R.id.filterFab)
 
+        // Inflate the layout for this fragment
+        return view
+    }
+
+    private fun toggleCalenderVisibility(view: View) {
+
+    }
+
+    private fun initViews(view: View) {
+        calendarViewSearch = view.findViewById(R.id.calendarViewSearch)
+        calendarToggleCV = view.findViewById(R.id.calendarToggleCV)
+
+        menuFab = view.findViewById(R.id.menuFab)
+        createFab = view.findViewById(R.id.createFab)
+        filterFab = view.findViewById(R.id.filterFab)
+
+    }
+
+    private fun fabHandler(view: View) {
         menuFab.setOnClickListener {
             if(FAB_IS_OPEN){
                 menuFab.setImageResource(R.drawable.ic_action_menu_light)
@@ -54,30 +93,22 @@ class SearchFragment : Fragment() {
         createFab.setOnClickListener{
             startActivity(Intent(view.context, CreateEventActivity::class.java))
         }
-
-        createCalenderView(view)
-
-
-        // Inflate the layout for this fragment
-        return view
     }
 
-    private fun createCalenderView(view: View){
+    private fun createCalenderEvent(view: View){
 
-        val today_event_recyclerview = view.findViewById<RecyclerView>(R.id.calendarRV)
+        eventRecyclerView = view.findViewById(R.id.calendarRV)
 
-        today_event_recyclerview.layoutManager = LinearLayoutManager(view.context)
+        eventRecyclerView.layoutManager = LinearLayoutManager(view.context)
 
-        val data = ArrayList<EventModel>()
+        eventList.add(EventModel("8:00 - 10:00", "Husk fodbold", "Fodboldgolf", false))
+        eventList.add(EventModel("12:00 - 13:30", "Afholdes i kantinen", "Bestyrelsesmøde", true))
+        eventList.add(EventModel("14:00 - 15:30", "Lokale 101", "Generélforsamling", false))
+        eventList.add(EventModel("20:00 - 21:30", "Træneren holder fri", "Fodboldtræning", true))
 
-        data.add(EventModel("8:00 - 10:00", "Husk fodbold", "Fodboldgolf", false))
-        data.add(EventModel("12:00 - 13:30", "Afholdes i kantinen", "Bestyrelsesmøde", true))
-        data.add(EventModel("14:00 - 15:30", "Lokale 101", "Generélforsamling", false))
-        data.add(EventModel("20:00 - 21:30", "Træneren holder fri", "Fodboldtræning", true))
+        adapter = CalendarEventAdapter(eventList)
 
-        val adapter = CalendarEventAdapter(data)
-
-        today_event_recyclerview.adapter = adapter
+        eventRecyclerView.adapter = adapter
     }
 
 
