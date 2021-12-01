@@ -40,7 +40,7 @@ class SearchFragment : Fragment() {
     RECYCLERVIEW
      */
     private lateinit var adapter: CalendarEventAdapter
-    private lateinit var eventList: ArrayList<EventModel>
+    private var eventList: ArrayList<EventModel> = ArrayList<EventModel>()
 
 
 
@@ -54,15 +54,9 @@ class SearchFragment : Fragment() {
         initViews(view)
         createCalenderEvent(view)
         fabHandler(view)
-        toggleCalenderVisibility(view)
-
 
         // Inflate the layout for this fragment
         return view
-    }
-
-    private fun toggleCalenderVisibility(view: View) {
-
     }
 
     private fun initViews(view: View) {
