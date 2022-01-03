@@ -27,13 +27,13 @@ class CalendarEventAdapter(private val eventList: List<EventModel>) : RecyclerVi
         val event = eventList[position]
 
         // sets the text to the textview from our itemHolder class
-        holder.timeView.text = event.time
+        holder.timeView.text =  event.eventTime.toString()
 
-        holder.descView.text = event.desc
+        holder.descView.text = event.eventDescription
 
-        holder.titleView.text = event.title
+        holder.titleView.text = event.eventName
 
-        if (event.participate){
+        /*if (event.participate){
             holder.acceptView.visibility = View.VISIBLE
             holder.imageView.setBackgroundResource(R.drawable.circle_imageview_green)
             holder.imageView.setImageResource(R.drawable.ic_action_done_light)
@@ -42,6 +42,8 @@ class CalendarEventAdapter(private val eventList: List<EventModel>) : RecyclerVi
             holder.imageView.setBackgroundResource(R.drawable.circle_imageview_red)
             holder.imageView.setImageResource(R.drawable.ic_action_user_light)
         }
+
+         */
 
     }
 
