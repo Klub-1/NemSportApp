@@ -7,15 +7,17 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.Models.EventModel
+import java.lang.Exception
 import java.util.*
+import kotlin.collections.ArrayList
 
 object DatabaseHelper {
 
     @SuppressLint("StaticFieldLeak")
     var db: FirebaseFirestore = Firebase.firestore
-    private lateinit var query: CollectionReference
 
 
     fun createEventInDB(event: EventModel) {
@@ -28,29 +30,32 @@ object DatabaseHelper {
     }
 
 
-    fun getFromDB(collection : String, args: ArrayList<ArrayList<String>>?): QuerySnapshot? {
-
+    fun getFromDB(collection : String, args: ArrayList<ArrayList<String>>?): ArrayList<Any> {
 
         var query = db.collection(collection)
 
-        var document: QuerySnapshot? = null
+        var models: ArrayList<Any> = ArrayList()
 
-        for (arg in args!!){
-            query = query.whereEqualTo(arg[0], arg[1]) as CollectionReference
-        }
-        query.get()
-            .addOnSuccessListener { result ->
-            document = result
-        }
-            .addOnFailureListener { exception ->
-            Log.w("BHelper getFromDB", "Error getting documents.", exception)
+        if (args != null) {
+            for (arg in args){
+                query = query.whereEqualTo(arg[0], arg[1]) as CollectionReference
+            }
         }
 
-        return document
+        query.get().addOnSuccessListener {
+            result ->
+            for (document in result) {
+                Log.w("DBHelper", document.data["eventName"].toString())
+            }
+        }.addOnFailureListener { Log.e("DBHelper", "FUCKING FEJL") }
+
+        return ArrayList()
     }
 
-    fun updateEventAttendanceInDB(userID:String event:EventModel){
-        
-    }
+    /*fun updateEventAttendanceInDB(userID:String, attending:Boolean, event:EventModel){
+        var query = firebase.firestore().collection("events")
+        query = query.where(id, "==", event.id)
+        event.attending.userID.attending
+    }*/
 
 }

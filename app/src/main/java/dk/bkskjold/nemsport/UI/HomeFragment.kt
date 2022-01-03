@@ -1,14 +1,18 @@
 package dk.bkskjold.nemsport.UI
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.QuerySnapshot
 import dk.bkskjold.nemsport.Adapter.TodayEventAdapter
 import dk.bkskjold.nemsport.Adapter.TomorrowEventAdapter
+import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 import java.util.ArrayList
@@ -31,6 +35,8 @@ class HomeFragment : Fragment() {
         createTodayView(view)
         createTomorrowView(view)
 
+        var events = DatabaseHelper.getFromDB("events", null)
+
         return view
     }
 
@@ -42,8 +48,8 @@ class HomeFragment : Fragment() {
 
         val data = ArrayList<EventModel>()
 
-        data.add(EventModel("8:00 - 10:00", "", "Fodboldgolf", false))
-        data.add(EventModel("20:00 - 21:30", "", "Fodboldtræning", false))
+        //data.add(EventModel("8:00 - 10:00", "", "Fodboldgolf", false))
+        //data.add(EventModel("20:00 - 21:30", "", "Fodboldtræning", false))
 
         val adapter = TodayEventAdapter(data)
 
@@ -58,8 +64,8 @@ class HomeFragment : Fragment() {
 
         val data = ArrayList<EventModel>()
 
-        data.add(EventModel("12:00 - 14:00", "", "Hyggebold", false))
-        data.add(EventModel("20:00 - 24:00", "", "Afslutningsfest", false))
+        //data.add(EventModel("12:00 - 14:00", "", "Hyggebold", false))
+        //data.add(EventModel("20:00 - 24:00", "", "Afslutningsfest", false))
 
         val adapter = TomorrowEventAdapter(data)
 

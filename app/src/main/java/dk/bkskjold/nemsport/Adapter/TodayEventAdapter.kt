@@ -27,16 +27,12 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        var events: QuerySnapshot? = DatabaseHelper.getFromDB("events", null)
-
-        Log.w("EVENTS", events?.firstOrNull().toString())
-
         val event = eventList[position]
 
         // sets the text to the textview from our itemHolder class
-        holder.timeView.text = event.time
+        /*holder.timeView.text = event.eventTime.toString()
 
-        holder.titleView.text = event.title
+        holder.titleView.text = event.eventName.toString()*/
     }
 
     // return the number of the items in the list
