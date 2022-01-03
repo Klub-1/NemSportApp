@@ -1,5 +1,8 @@
 package dk.bkskjold.nemsport.Models
 
-data class EventModel(val time: String, val desc: String, val title: String, val participate: Boolean){
+import java.sql.Struct
+import com.google.firebase.Timestamp
+
+data class EventModel(val eventDeadline: com.google.firebase.Timestamp , val eventName: String ,val eventParticipantsUID: String,val evnetPitch: PitchModel ,val eventTime:com.google.firebase.Timestamp){
 
 }
