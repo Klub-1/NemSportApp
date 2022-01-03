@@ -25,9 +25,9 @@ class TomorrowEventAdapter(private val eventList: List<EventModel>) : RecyclerVi
         val event = eventList[position]
 
         // sets the text to the textview from our itemHolder class
-        holder.timeView.text = event.eventTime.toString()
+        //holder.timeView.text = event.time
 
-        holder.titleView.text = event.eventName
+        //holder.titleView.text = event.title
 
     }
 
