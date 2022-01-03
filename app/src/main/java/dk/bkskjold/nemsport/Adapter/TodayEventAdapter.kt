@@ -1,10 +1,14 @@
 package dk.bkskjold.nemsport.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.QuerySnapshot
+import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 
@@ -22,6 +26,10 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
 
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        var events: QuerySnapshot? = DatabaseHelper.getFromDB("events", null)
+
+        Log.w("EVENTS", events?.firstOrNull().toString())
 
         val event = eventList[position]
 
