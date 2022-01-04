@@ -42,13 +42,22 @@ class SignupActivity : AppCompatActivity() {
             val phonenumber: String = phoneEt.text.toString()
             val mail: String = mailEt.text.toString()
             val psw: String = pswEt.text.toString()
-            if (username != null && phonenumber != null && mail != null && psw != null){ signup(username, phonenumber, mail, psw) }
+            if (checkforempty(username) && checkforempty(phonenumber) && checkforempty(mail) && checkforempty(psw)){ signup(username, phonenumber, mail, psw) }
         }
 
         to_loginBtn.setOnClickListener{
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
+    }
+
+    private fun checkforempty(txt: String) : Boolean {
+
+        if (txt == null){ return false }
+        if (txt.isEmpty()){ return false }
+        if (txt.isBlank()){ return false }
+
+        return true
     }
 
     private fun signup(username: String, phonenumber: String, mail: String, psw: String) {

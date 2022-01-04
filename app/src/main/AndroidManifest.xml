@@ -11,17 +11,17 @@
         android:theme="@style/Theme.NemSport">
         <activity
             android:name=".UI.auth.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".UI.auth.LoginActivity"
             android:exported="true" />
         <activity
             android:name=".UI.auth.SignupActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".UI.auth.LoginActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="true"
-            android:label="@string/title_activity_login" />
         <activity
             android:name=".UI.CreateEventActivity"
             android:exported="true"

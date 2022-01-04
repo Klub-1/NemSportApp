@@ -25,7 +25,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         forgotPasswordBtn.setOnClickListener {
             val mail: String = mailEt.text.toString()
 
-            if (mail != null){
+            if (checkforempty(mail)){
                 // Based on
                     // https://morioh.com/p/e96e178d3510
                 auth.sendPasswordResetEmail(mail)
@@ -40,4 +40,14 @@ class ForgotPasswordActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun checkforempty(txt: String) : Boolean {
+
+        if (txt == null){ return false }
+        if (txt.isEmpty()){ return false }
+        if (txt.isBlank()){ return false }
+
+        return true
+    }
+
 }

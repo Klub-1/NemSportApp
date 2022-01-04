@@ -53,13 +53,22 @@ class LoginActivity : AppCompatActivity() {
         loginBtn.setOnClickListener{
             val mail: String = mailEt.text.toString()
             val psw: String = pswEt.text.toString()
-            if (mail != null && psw != null){ login(mail = mail, psw = psw) }
+            if (checkforempty(mail) && checkforempty(psw)){ login(mail = mail, psw = psw) }
         }
 
         to_signupBtn.setOnClickListener{
             startActivity(Intent(this, SignupActivity::class.java))
         }
 
+    }
+
+    private fun checkforempty(txt: String) : Boolean {
+
+        if (txt == null){ return false }
+        if (txt.isEmpty()){ return false }
+        if (txt.isBlank()){ return false }
+
+        return true
     }
 
     private fun login(mail: String, psw: String) {
