@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 import dk.bkskjold.nemsport.UI.EventActivity
-import dk.bkskjold.nemsport.UI.EventFragment
 import java.text.SimpleDateFormat
 
 class CalendarEventAdapter(private val eventList: List<EventModel>) : RecyclerView.Adapter<CalendarEventAdapter.ViewHolder>() {

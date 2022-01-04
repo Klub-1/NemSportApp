@@ -43,7 +43,7 @@ class CreateEventActivity : AppCompatActivity() {
 
 
         lifecycleScope.launch {
-            pitches = DatabaseHelper.getClubsFromDB()
+            pitches = DatabaseHelper.getPitchesFromDB()
             for (clubnames in pitches){
                 teams.add(clubnames.pitchNames)
             }
