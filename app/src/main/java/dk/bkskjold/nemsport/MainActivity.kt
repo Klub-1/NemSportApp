@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private val signInIntent = AuthUI.getInstance()
         .createSignInIntentBuilder()
         .setTheme(R.style.LoginTheme)
+        .setLogo(R.mipmap.logo_bkskjold)
         .setAvailableProviders(providers)
         .build()
 
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         // Check memory if a user is already logged in
         // Inspired by user @Leenah on Stackoverflow:
         // https://stackoverflow.com/questions/22262463/firebase-how-to-keep-an-android-user-logged-in
-        val user = FirebaseAuth.getInstance().currentUser
+        val user = null // FirebaseAuth.getInstance().currentUser
         if (user != null) {
             // User is signed in
             startActivity(Intent(this, FragmentContainerActivity::class.java))
