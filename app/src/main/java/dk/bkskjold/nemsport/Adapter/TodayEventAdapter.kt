@@ -30,9 +30,9 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
         val event = eventList[position]
 
         // sets the text to the textview from our itemHolder class
-        /*holder.timeView.text = event.eventTime.toString()
+        holder.timeView.text = event.eventTime.toString()
 
-        holder.titleView.text = event.eventName.toString()*/
+        holder.titleView.text = event.eventName.toString()
     }
 
     // return the number of the items in the list
