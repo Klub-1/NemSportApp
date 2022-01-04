@@ -8,9 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.type.Date
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
+import java.text.SimpleDateFormat
 
 class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.Adapter<TodayEventAdapter.ViewHolder>() {
 
@@ -29,10 +31,12 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
 
         val event = eventList[position]
 
-        // sets the text to the textview from our itemHolder class
-        /*holder.timeView.text = event.eventTime.toString()
+        val sdf = SimpleDateFormat("EEE, d MMM yyyy HH:mm")
 
-        holder.titleView.text = event.eventName.toString()*/
+        // sets the text to the textview from our itemHolder class
+        holder.timeView.text = sdf.format(event.eventTime.toDate())
+
+        holder.titleView.text = event.eventName.toString()
     }
 
     // return the number of the items in the list

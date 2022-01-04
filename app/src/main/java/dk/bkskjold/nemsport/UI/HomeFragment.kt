@@ -1,3 +1,5 @@
+
+
 package dk.bkskjold.nemsport.UI
 
 import android.os.Bundle
@@ -15,11 +17,12 @@ import dk.bkskjold.nemsport.Adapter.TomorrowEventAdapter
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 
 class HomeFragment : Fragment() {
 
+    var model = arrayListOf<EventModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +37,18 @@ class HomeFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         createTodayView(view)
         createTomorrowView(view)
+        var query = DatabaseHelper.db.collection("events")
 
-        var events = DatabaseHelper.getFromDB("events", null)
+
+        query.get().addOnSuccessListener { model =
+            it.toObjects(EventModel::class.java) as ArrayList<EventModel>
+            createTodayView(view)
+        }
+
+
+
+
+
 
         return view
     }
@@ -51,7 +64,7 @@ class HomeFragment : Fragment() {
         //data.add(EventModel("8:00 - 10:00", "", "Fodboldgolf", false))
         //data.add(EventModel("20:00 - 21:30", "", "Fodboldtræning", false))
 
-        val adapter = TodayEventAdapter(data)
+        val adapter = TodayEventAdapter(model)
 
         today_event_recyclerview.adapter = adapter
     }
@@ -67,7 +80,7 @@ class HomeFragment : Fragment() {
         //data.add(EventModel("12:00 - 14:00", "", "Hyggebold", false))
         //data.add(EventModel("20:00 - 24:00", "", "Afslutningsfest", false))
 
-        val adapter = TomorrowEventAdapter(data)
+        val adapter = TomorrowEventAdapter(model)
 
         tomorrow_event_recyclerview.adapter = adapter
     }
