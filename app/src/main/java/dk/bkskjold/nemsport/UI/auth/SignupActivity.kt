@@ -12,6 +12,7 @@ import com.google.firebase.auth.SignInMethodQueryResult
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.FragmentContainerActivity
+import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.R
 
 class SignupActivity : AppCompatActivity() {
@@ -26,6 +27,7 @@ class SignupActivity : AppCompatActivity() {
         setContentView(R.layout.activity_signup)
 
         val usernameEt: EditText = findViewById(R.id.usernameEt)
+        val phoneEt: EditText = findViewById(R.id.phoneEt)
         val mailEt: EditText = findViewById(R.id.mailEt)
         val pswEt: EditText = findViewById(R.id.pswEt)
 
@@ -35,10 +37,11 @@ class SignupActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         signupBtn.setOnClickListener{
-            val usrname: String = usernameEt.text.toString()
+            val username: String = usernameEt.text.toString()
+            val phonenumber: String = phoneEt.text.toString()
             val mail: String = mailEt.text.toString()
             val psw: String = pswEt.text.toString()
-            if (usernameEt != null && mail != null && psw != null){ signup(mail = mail, psw = psw) }
+            if (username != null && phonenumber != null && mail != null && psw != null){ signup(username, phonenumber, mail, psw) }
         }
 
         to_loginBtn.setOnClickListener{
@@ -47,17 +50,17 @@ class SignupActivity : AppCompatActivity() {
 
     }
 
-    private fun signup(mail: String, psw: String) {
+    private fun signup(username: String, phonenumber: String, mail: String, psw: String) {
         auth.createUserWithEmailAndPassword(mail, psw)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("SIGNUP", "createUserWithEmail:success - " + (auth.currentUser?.uid ?: "FEJL"))
 
-                    db.collection("cities").document("LA")
+                    DatabaseHelper.db.collection("users").document("LA")
                         .set(city)
-                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-                        .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+                        .addOnSuccessListener { Log.d("SIGNUP", "DocumentSnapshot successfully written!") }
+                        .addOnFailureListener { e -> Log.w("SIGNUP", "Error writing document", e) }
                     startActivity(Intent(this, FragmentContainerActivity::class.java))
                 } else {
                     // If sign in fails, display a message to the user.

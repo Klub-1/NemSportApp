@@ -28,6 +28,17 @@
         android:autofillHints="name" />
 
     <EditText
+        android:id="@+id/phoneEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="@string/phonenumber"
+        android:inputType="phone"
+        android:minHeight="48dp"
+        android:autofillHints="phone" />
+
+    <EditText
         android:id="@+id/mailEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
