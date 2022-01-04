@@ -13,6 +13,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.FragmentContainerActivity
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
+import dk.bkskjold.nemsport.Models.UserModel
 import dk.bkskjold.nemsport.R
 
 class SignupActivity : AppCompatActivity() {
@@ -57,11 +58,21 @@ class SignupActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("SIGNUP", "createUserWithEmail:success - " + (auth.currentUser?.uid ?: "FEJL"))
 
-                    DatabaseHelper.db.collection("users").document("LA")
-                        .set(city)
-                        .addOnSuccessListener { Log.d("SIGNUP", "DocumentSnapshot successfully written!") }
-                        .addOnFailureListener { e -> Log.w("SIGNUP", "Error writing document", e) }
+                    val uid: String? = auth.currentUser?.uid
+
+                    if (uid != null){
+                        DatabaseHelper.db.collection("users").document(uid)
+                            .set(UserModel(username, phonenumber))
+                            .addOnSuccessListener {
+                                Log.d("SIGNUP", "DocumentSnapshot successfully written!")
+                            }
+                            .addOnFailureListener { e -> Log.w("SIGNUP", "Error writing document", e) }
+                    }
+
                     startActivity(Intent(this, FragmentContainerActivity::class.java))
+
+
+
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("SIGNUP", "createUserWithEmail:failure", task.exception)
