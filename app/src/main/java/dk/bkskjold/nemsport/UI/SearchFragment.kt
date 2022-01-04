@@ -95,10 +95,7 @@ class SearchFragment : Fragment() {
 
         eventRecyclerView.layoutManager = LinearLayoutManager(view.context)
 
-        eventList.add(EventModel("8:00 - 10:00", "Husk fodbold", "Fodboldgolf", false))
-        eventList.add(EventModel("12:00 - 13:30", "Afholdes i kantinen", "Bestyrelsesmøde", true))
-        eventList.add(EventModel("14:00 - 15:30", "Lokale 101", "Generélforsamling", false))
-        eventList.add(EventModel("20:00 - 21:30", "Træneren holder fri", "Fodboldtræning", true))
+        
 
         adapter = CalendarEventAdapter(eventList)
 
