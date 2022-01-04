@@ -8,11 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.type.Date
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
-import java.text.SimpleDateFormat
 
 class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.Adapter<TodayEventAdapter.ViewHolder>() {
 
