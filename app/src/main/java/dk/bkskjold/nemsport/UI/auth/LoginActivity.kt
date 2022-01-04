@@ -46,6 +46,10 @@ class LoginActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
+        forgotPswTxt.setOnClickListener{
+            startActivity(Intent(this, ForgotPasswordActivity::class.java))
+        }
+
         loginBtn.setOnClickListener{
             val mail: String = mailEt.text.toString()
             val psw: String = pswEt.text.toString()
@@ -68,17 +72,6 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("LOGIN", "signInWithEmail:failure", task.exception)
-                    // Based on
-                    // https://stackoverflow.com/questions/40093781/check-if-given-email-exists/40095155
-                    auth.fetchSignInMethodsForEmail(mail)
-                        .addOnCompleteListener(OnCompleteListener<SignInMethodQueryResult> { task ->
-                            val isNewUser = task.result!!.signInMethods!!.isEmpty()
-                            if (isNewUser) {
-                                Log.e("LOGIN", "Is New User!")
-                            } else {
-                                Log.e("LOGIN", "Is Old User!")
-                            }
-                        })
                 }
             }
     }

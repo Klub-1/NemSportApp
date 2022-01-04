@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NemSport">
         <activity
+            android:name=".UI.auth.ForgotPasswordActivity"
+            android:exported="true" />
+        <activity
             android:name=".UI.auth.SignupActivity"
             android:exported="true" />
         <activity
