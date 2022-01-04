@@ -1,19 +1,19 @@
 package dk.bkskjold.nemsport.UI
 
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.content.Intent
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.core.view.get
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.Timestamp
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.ClubModel
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.Models.PitchModel
 import dk.bkskjold.nemsport.R
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -24,7 +24,9 @@ class CreateEventActivity : AppCompatActivity() {
 
     var thisDate = Timestamp(Calendar.getInstance().getTime())
 
-    var clubs = ArrayList<PitchModel>()
+    private var pitches: MutableList<PitchModel> = mutableListOf()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +36,24 @@ class CreateEventActivity : AppCompatActivity() {
         val picktime: ImageView = findViewById(R.id.datePicker)
         val teams = ArrayList<String>()
         val teamsSpinner: Spinner = findViewById(R.id.spinner)
+        val descView : EditText = findViewById<EditText>(R.id.descEt)
+
 
         var query = DatabaseHelper.db.collection("pitches")
 
 
-        query.get().addOnSuccessListener { clubs =
+        lifecycleScope.launch {
+            pitches = DatabaseHelper.getClubsFromDB()
+            for (clubnames in pitches){
+                teams.add(clubnames.pitchNames)
+            }
+            val apapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                baseContext, android.R.layout.simple_spinner_item, teams
+            )
+            teamsSpinner.adapter = apapter
+        }
+
+        /*query.get().addOnSuccessListener { clubs =
             it.toObjects(PitchModel::class.java) as ArrayList<PitchModel>
             for (clubnames in clubs){
                 teams.add(clubnames.pitchNames)
@@ -49,6 +64,10 @@ class CreateEventActivity : AppCompatActivity() {
             teamsSpinner.adapter = apapter
         }
 
+         */
+
+
+
 
 
 
@@ -58,10 +77,9 @@ class CreateEventActivity : AppCompatActivity() {
 
             val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 findViewById<TextView>(R.id.show_date).text = dayOfMonth.toString()+"-"+(month.toInt()+1).toString()+"-"+year.toString()
-                //chosenDate = Date(year, month,dayOfMonth, now.get(Calendar.HOUR), now.get(Calendar.MINUTE), now.get(Calendar.SECOND))
-                chosenDate.year = year
-                chosenDate.month = month
-                chosenDate.date = dayOfMonth
+                chosenDate = Date(year-1900, month,dayOfMonth, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), now.get(Calendar.SECOND))
+
+
             }
             ,now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DATE))
 
@@ -75,8 +93,10 @@ class CreateEventActivity : AppCompatActivity() {
 
 
         }
+
+        //teamsSpinner.getSelectedItem().toString()
         createEvent.setOnClickListener{
-            DatabaseHelper.createEventInDB(EventModel(findViewById<EditText>(R.id.teamNameEt).text.toString(), Timestamp(chosenDate)))
+            DatabaseHelper.createEventInDB(EventModel(findViewById<EditText>(R.id.teamNameEt).text.toString(), Timestamp(chosenDate), descView.text.toString(),teamsSpinner.getSelectedItem().toString()))
             super.onBackPressed()
         }
 

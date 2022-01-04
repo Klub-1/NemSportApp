@@ -8,13 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dk.bkskjold.nemsport.Adapter.CalendarEventAdapter
+import dk.bkskjold.nemsport.Adapter.TodayEventAdapter
+import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
-import java.util.ArrayList
+import dk.bkskjold.nemsport.databinding.FragmentCalendarBinding
+import dk.bkskjold.nemsport.databinding.FragmentHomeBinding
+import kotlinx.coroutines.launch
+import java.util.*
 
 class SearchFragment : Fragment() {
 
@@ -36,27 +43,65 @@ class SearchFragment : Fragment() {
     private lateinit var calendarViewSearch: CalendarView
     private lateinit var calendarToggleCV: CardView
 
+    val now = Calendar.getInstance()
+
+    var model = arrayListOf<EventModel>()
+
     /*
     RECYCLERVIEW
      */
     private lateinit var adapter: CalendarEventAdapter
     private var eventList: ArrayList<EventModel> = ArrayList<EventModel>()
+    var query = DatabaseHelper.db.collection("events")
 
 
+    private lateinit var eventAdapter: CalendarEventAdapter
+    private var _binding: FragmentCalendarBinding? = null
+    private var _eventList : MutableList<EventModel> = mutableListOf()
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_calendar, container, false)
 
-        initViews(view)
-        createCalenderEvent(view)
-        fabHandler(view)
+        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        val root: View = binding.root
 
+        initViews(root)
+
+        val eventRecyclerView: RecyclerView = binding.calendarRV
+        eventAdapter = CalendarEventAdapter(_eventList)
+        eventRecyclerView.adapter = eventAdapter
+        eventRecyclerView.layoutManager = LinearLayoutManager(activity, OrientationHelper.VERTICAL, false)
+
+
+        lifecycleScope.launch {
+            _eventList += DatabaseHelper.getEventsByDateFromDB(Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),0,0)
+                ,Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),23,59))
+            eventAdapter.notifyDataSetChanged()
+        }
+
+
+        calendarViewSearch.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+            _eventList = mutableListOf()
+            eventAdapter = CalendarEventAdapter(_eventList)
+            eventRecyclerView.adapter = eventAdapter
+            lifecycleScope.launch {
+                _eventList += DatabaseHelper.getEventsByDateFromDB(Date(year-1900,month,dayOfMonth,0,0),(Date(year-1900,month,dayOfMonth,23,59)))
+                eventAdapter.notifyDataSetChanged()
+            }
+
+
+        }
+        fabHandler(root)
+        initViews(root)
         // Inflate the layout for this fragment
-        return view
+        return root
     }
 
     private fun initViews(view: View) {
@@ -87,19 +132,6 @@ class SearchFragment : Fragment() {
         createFab.setOnClickListener{
             startActivity(Intent(view.context, CreateEventActivity::class.java))
         }
-    }
-
-    private fun createCalenderEvent(view: View){
-
-        eventRecyclerView = view.findViewById(R.id.calendarRV)
-
-        eventRecyclerView.layoutManager = LinearLayoutManager(view.context)
-
-        
-
-        adapter = CalendarEventAdapter(eventList)
-
-        eventRecyclerView.adapter = adapter
     }
 
 
