@@ -12,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.Models.ClubModel
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.Models.PitchModel
+import dk.bkskjold.nemsport.Models.UserModel
 import kotlinx.coroutines.tasks.await
 import java.util.*
 
@@ -29,6 +30,20 @@ object DatabaseHelper {
             .addOnFailureListener { e ->
                 Log.w("DBHelper", "Error adding document", e)
             }
+    }
+    /**
+     * @param user the usermodel
+     * @param UID the document name
+     */
+    fun createUserInDB(UID:String,user: UserModel) {
+        db.collection("users").document(UID).set(user).addOnSuccessListener{ documentReference ->
+            Log.d("DBHelper", "DocumentSnapshot added with ID:")
+        }
+            .addOnFailureListener { e ->
+                Log.w("DBHelper", "Error adding document", e)
+            }
+
+
     }
 
     suspend fun getEventsFromDB( ): MutableList<EventModel> {
