@@ -2,6 +2,7 @@ package dk.bkskjold.nemsport.Helper
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.firebase.ui.auth.data.model.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -9,10 +10,13 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import dk.bkskjold.nemsport.Models.ClubModel
 import dk.bkskjold.nemsport.Models.EventModel
-import java.lang.Exception
+import dk.bkskjold.nemsport.Models.PitchModel
+import dk.bkskjold.nemsport.Models.UserModel
+import kotlinx.coroutines.tasks.await
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 object DatabaseHelper {
 
@@ -28,29 +32,68 @@ object DatabaseHelper {
                 Log.w("DBHelper", "Error adding document", e)
             }
     }
-
-
-    fun getFromDB(collection : String, args: ArrayList<ArrayList<String>>?): ArrayList<Any> {
-
-        var query = db.collection(collection)
-
-        var models: ArrayList<Any> = ArrayList()
-
-        if (args != null) {
-            for (arg in args){
-                query = query.whereEqualTo(arg[0], arg[1]) as CollectionReference
-            }
+    /**
+     * @param user the usermodel
+     * @param UID the document name
+     */
+    fun createUserInDB(UID:String,user: UserModel) {
+        db.collection("users").document(UID).set(user).addOnSuccessListener{ documentReference ->
+            Log.d("DBHelper", "DocumentSnapshot added with ID:")
         }
-
-        query.get().addOnSuccessListener {
-            result ->
-            for (document in result) {
-                Log.w("DBHelper", document.data["eventName"].toString())
+            .addOnFailureListener { e ->
+                Log.w("DBHelper", "Error adding document", e)
             }
-        }.addOnFailureListener { Log.e("DBHelper", "FUCKING FEJL") }
 
-        return ArrayList()
+
     }
+
+    suspend fun getEventsFromDB( ): MutableList<EventModel> {
+
+        val snapshot = db
+            .collection("events")
+            .get()
+            .await()
+
+        return snapshot.toObjects(EventModel::class.java)
+    }
+
+    suspend fun getPitchesFromDB( ): MutableList<PitchModel> {
+
+        val snapshot = db
+            .collection("pitches")
+            .get()
+            .await()
+
+        return snapshot.toObjects(PitchModel::class.java)
+    }
+
+    suspend fun getUserFromDB(UID: String ): UserModel? {
+
+        val docref = db
+            .collection("users")
+            .document(UID)
+
+        val snapshot = docref
+            .get()
+            .await()
+
+        return snapshot.toObject(UserModel::class.java)
+    }
+
+    suspend fun getEventsByDateFromDB( dateStart:Date,dateEnd:Date): MutableList<EventModel> {
+
+        val snapshot = db
+            .collection("events")
+            .orderBy("eventTime")
+            .startAt(dateStart)
+            .endAt(dateEnd)
+            .get()
+            .await()
+
+        return snapshot.toObjects(EventModel::class.java)
+    }
+
+
 
     /*fun updateEventAttendanceInDB(userID:String, attending:Boolean, event:EventModel){
         var query = firebase.firestore().collection("events")

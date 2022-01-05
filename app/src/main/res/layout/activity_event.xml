@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.EventFragment">
+
+
+    <TextView
+        android:id="@+id/eventNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event Name"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp"
+        />
+
+    <TextView
+        android:id="@+id/deltagere"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventNameTextView"
+        android:text="Deltagerliste"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/userRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/deltagere"
+        android:layout_alignParentStart="true"
+        tools:itemCount="10"
+
+
+
+        />
+
+    <TextView
+        android:id="@+id/beskriv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userRecyclerView"
+        android:text="Beskrivelse"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+
+        />
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/beskriv"
+        android:padding="10dp"
+        android:lines="8"
+
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/desc"
+        android:id="@+id/placering"
+        android:textSize="15dp"
+        android:text="placering"
+
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/placering"
+        android:id="@+id/placeTextView"
+        android:textSize="10dp"
+        android:text="placering"
+
+        />
+
+    <Button
+        android:layout_below="@+id/placeTextView"
+        android:id="@+id/signUpBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/join" />
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signUpBtn"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/back" />
+
+</RelativeLayout>

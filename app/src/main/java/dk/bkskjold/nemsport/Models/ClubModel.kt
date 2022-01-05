@@ -1,3 +1,3 @@
 package dk.bkskjold.nemsport.Models
 
-data class ClubModel(val clubName:String)
+data class ClubModel(val clubName:String = "")
