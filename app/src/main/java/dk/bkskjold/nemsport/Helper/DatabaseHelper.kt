@@ -80,6 +80,12 @@ object DatabaseHelper {
         return snapshot.toObject(UserModel::class.java)
     }
 
+    fun updateUserInDB(UID: String, user: UserModel): Task<Void> {
+        val userRef = db.collection("users").document(UID)
+
+        return userRef.set(user)
+    }
+
     suspend fun getEventsByDateFromDB( dateStart:Date,dateEnd:Date): MutableList<EventModel> {
 
         val snapshot = db
