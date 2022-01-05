@@ -49,6 +49,7 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch {
             _eventList += DatabaseHelper.getEventsFromDB()
+            _eventList.sortBy { it.eventTime }
             eventAdapter.notifyDataSetChanged()
         }
 
