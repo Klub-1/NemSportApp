@@ -17,6 +17,7 @@ import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 import dk.bkskjold.nemsport.UI.EventActivity
 import java.text.SimpleDateFormat
+import com.google.firebase.Timestamp
 
 class CalendarEventAdapter(private val eventList: List<EventModel>) : RecyclerView.Adapter<CalendarEventAdapter.ViewHolder>() {
 
