@@ -2,6 +2,7 @@ package dk.bkskjold.nemsport.Helper
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.firebase.ui.auth.data.model.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -64,6 +65,19 @@ object DatabaseHelper {
             .await()
 
         return snapshot.toObjects(PitchModel::class.java)
+    }
+
+    suspend fun getUserFromDB(UID: String ): UserModel? {
+
+        val docref = db
+            .collection("users")
+            .document(UID)
+
+        val snapshot = docref
+            .get()
+            .await()
+
+        return snapshot.toObject(UserModel::class.java)
     }
 
     suspend fun getEventsByDateFromDB( dateStart:Date,dateEnd:Date): MutableList<EventModel> {

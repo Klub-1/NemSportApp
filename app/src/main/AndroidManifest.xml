@@ -30,8 +30,7 @@
             android:screenOrientation="portrait"
             android:exported="true"
             android:label="@string/title_activity_create_event"
-            android:parentActivityName=".FragmentContainerActivity"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".FragmentContainerActivity"/>
         <activity
             android:name=".FragmentContainerActivity"
             android:exported="true"

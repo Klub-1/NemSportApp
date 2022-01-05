@@ -45,18 +45,7 @@ class CalendarEventAdapter(private val eventList: List<EventModel>) : RecyclerVi
             intent.putExtra("event",event)
             holder.itemView.context.startActivity(intent)
         }
-        
 
-
-        /*holder.cardEvent.setOnClickListener( object:View.OnClickListener {
-            override fun onClick(v: View?) {
-                val acticity = v!!.context as AppCompatActivity
-                val eventFragment = EventFragment()
-                acticity.supportFragmentManager.beginTransaction().replace(R.id.test,eventFragment).addToBackStack(null).commit()
-            }
-        })
-
-         */
 
 
 

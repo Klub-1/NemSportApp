@@ -14,10 +14,13 @@ data class EventModel(
     val eventName: String? = "",
     val eventTime:Timestamp = Timestamp(Calendar.getInstance().getTime()),
     val eventDescription:String = "",
-    val pitches:String = "")  : Parcelable {
+    val pitches:String = "",
+    val eventCreaterUID:String = ""
+)  : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readParcelable(Timestamp::class.java.classLoader)!!,
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!
     ) {
@@ -28,6 +31,7 @@ data class EventModel(
         parcel.writeParcelable(eventTime, flags)
         parcel.writeString(eventDescription)
         parcel.writeString(pitches)
+        parcel.writeString(eventCreaterUID)
     }
 
     override fun describeContents(): Int {

@@ -1,6 +1,7 @@
 package dk.bkskjold.nemsport.UI
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +9,14 @@ import android.widget.*
 import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import dk.bkskjold.nemsport.FragmentContainerActivity
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.ClubModel
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.Models.PitchModel
+import dk.bkskjold.nemsport.Models.UserModel
 import dk.bkskjold.nemsport.R
 import kotlinx.coroutines.launch
 import java.util.*
@@ -53,24 +58,6 @@ class CreateEventActivity : AppCompatActivity() {
             teamsSpinner.adapter = apapter
         }
 
-        /*query.get().addOnSuccessListener { clubs =
-            it.toObjects(PitchModel::class.java) as ArrayList<PitchModel>
-            for (clubnames in clubs){
-                teams.add(clubnames.pitchNames)
-            }
-            val apapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                this,android.R.layout.simple_spinner_item,teams
-            )
-            teamsSpinner.adapter = apapter
-        }
-
-         */
-
-
-
-
-
-
 
         picktime.setOnClickListener{
             // https://www.youtube.com/watch?v=gollUUFBKQA&ab_channel=CodeAndroid
@@ -96,8 +83,13 @@ class CreateEventActivity : AppCompatActivity() {
 
         //teamsSpinner.getSelectedItem().toString()
         createEvent.setOnClickListener{
-            DatabaseHelper.createEventInDB(EventModel(findViewById<EditText>(R.id.teamNameEt).text.toString(), Timestamp(chosenDate), descView.text.toString(),teamsSpinner.getSelectedItem().toString()))
-            super.onBackPressed()
+            DatabaseHelper.createEventInDB(EventModel(findViewById<EditText>(R.id.teamNameEt).text.toString()
+                , Timestamp(chosenDate)
+                , descView.text.toString()
+                ,teamsSpinner.getSelectedItem().toString()
+                , Firebase.auth.currentUser!!.uid.toString()
+            ))
+            startActivity(Intent(this,FragmentContainerActivity::class.java))
         }
 
         backBtn.setOnClickListener{
