@@ -46,19 +46,13 @@ class HomeFragment : Fragment() {
         todayRecyclerView.adapter = eventAdapter
         todayRecyclerView.layoutManager = LinearLayoutManager(activity, OrientationHelper.VERTICAL, false)
 
-
         lifecycleScope.launch {
             _eventList += DatabaseHelper.getEventsFromDB()
             _eventList.sortBy { it.eventTime }
             eventAdapter.notifyDataSetChanged()
         }
 
-
-
         return root
     }
-
-
-
 
 }
