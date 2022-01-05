@@ -1,10 +1,14 @@
 package dk.bkskjold.nemsport.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.QuerySnapshot
+import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 
@@ -26,9 +30,9 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
         val event = eventList[position]
 
         // sets the text to the textview from our itemHolder class
-        holder.timeView.text = event.time
+        /*holder.timeView.text = event.eventTime.toString()
 
-        holder.titleView.text = event.title
+        holder.titleView.text = event.eventName.toString()*/
     }
 
     // return the number of the items in the list
