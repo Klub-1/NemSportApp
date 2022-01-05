@@ -70,12 +70,7 @@ class SignupActivity : AppCompatActivity() {
                     val uid: String? = auth.currentUser?.uid
 
                     if (uid != null){
-                        DatabaseHelper.db.collection("users").document(uid)
-                            .set(UserModel(username, phonenumber))
-                            .addOnSuccessListener {
-                                Log.d("SIGNUP", "DocumentSnapshot successfully written!")
-                            }
-                            .addOnFailureListener { e -> Log.w("SIGNUP", "Error writing document", e) }
+                        DatabaseHelper.createUserInDB(uid,UserModel(username, phonenumber))
                     }
 
                     startActivity(Intent(this, FragmentContainerActivity::class.java))
