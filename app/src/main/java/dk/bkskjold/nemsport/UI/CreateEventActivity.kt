@@ -10,6 +10,7 @@ import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.FragmentContainerActivity
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
@@ -88,6 +89,8 @@ class CreateEventActivity : AppCompatActivity() {
                 , descView.text.toString()
                 ,teamsSpinner.getSelectedItem().toString()
                 , Firebase.auth.currentUser!!.uid.toString()
+                , ArrayList<String>()
+                , Firebase.database.reference.child("events").push().key!!
             ))
             startActivity(Intent(this,FragmentContainerActivity::class.java))
         }

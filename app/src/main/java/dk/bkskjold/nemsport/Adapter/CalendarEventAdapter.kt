@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 import dk.bkskjold.nemsport.UI.EventActivity
@@ -59,7 +61,7 @@ class CalendarEventAdapter(private val eventList: List<EventModel>) : RecyclerVi
 
         holder.titleView.text = event.eventName.toString()
 
-        /*if (event.participate){
+        if (event.participants.contains(Firebase.auth.uid)){
             holder.acceptView.visibility = View.VISIBLE
             holder.imageView.setBackgroundResource(R.drawable.circle_imageview_green)
             holder.imageView.setImageResource(R.drawable.ic_action_done_light)
@@ -67,7 +69,7 @@ class CalendarEventAdapter(private val eventList: List<EventModel>) : RecyclerVi
             holder.acceptView.visibility = View.GONE
             holder.imageView.setBackgroundResource(R.drawable.circle_imageview_red)
             holder.imageView.setImageResource(R.drawable.ic_action_user_light)
-        }*/
+        }
 
     }
 

@@ -16,10 +16,12 @@ import kotlinx.coroutines.launch
 
 
 class EventActivity : AppCompatActivity() {
+    var participantsItemArray = ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_event)
-        var event:EventModel = intent.extras?.get("event") as EventModel
+        var event: EventModel = intent.extras?.get("event") as EventModel
 
         val eventName = findViewById<TextView>(R.id.eventNameTextView)
         val eventDesc = findViewById<TextView>(R.id.desc)
@@ -32,6 +34,17 @@ class EventActivity : AppCompatActivity() {
         eventName.text = event.eventName
         eventDestination.text = event.pitches
 
+        val signUpBtn = findViewById<Button>(R.id.signUpBtn)
+
+        if (!event.participants.contains(event.eventCreaterUID)) {
+            signUpBtn.text = "afmeld"
+            true
+        } else {
+            signUpBtn.text = "tilmeld"
+            true
+        }
+
+
         lifecycleScope.launch {
             val UID = event.eventCreaterUID.toString()
             authorTextView.text = DatabaseHelper.getUserFromDB(UID)?.username.toString()
@@ -39,20 +52,57 @@ class EventActivity : AppCompatActivity() {
 
         Log.d("DBHelper", "DocumentSnapshot added with ID:")
 
-        var participantsItemArray = ArrayList<StringItem>()
+        var participantsItemArray = ArrayList<String>()
 
-        for (i in 0..20){
-            participantsItemArray.add(i,StringItem((i.toString())))
-        }
 
         //adds newly created list of StringItems
-        participants.adapter = ParticipantsEventAdapter(participantsItemArray)
 
 
+        signUpBtn.setOnClickListener {
+            if (!event.participants.contains(event.eventCreaterUID)) {
+                lifecycleScope.launch {
+                    event.participants.add(event.eventCreaterUID)
+                    DatabaseHelper.updateParticapents(event)
+                    signUpBtn.text = "afmeld"
+                    true
+                    createRC(event,participants)
+                }
+            } else {
+                lifecycleScope.launch {
+                    event.participants.remove(event.eventCreaterUID)
+                    DatabaseHelper.updateParticapents(event)
+                    signUpBtn.text = "tilmeld"
+                    true
+                    createRC(event,participants)
+                }
+            }
+        }
 
-        backBtn.setOnClickListener{
-            // https://stackoverflow.com/questions/4038479/android-go-back-to-previous-activity
-            super.onBackPressed()
+
+        lifecycleScope.launch {
+            for (people in event.participants) {
+                var person = DatabaseHelper.getUserFromDB(people)
+                person?.let { participantsItemArray.add(it.username) }
+                participants.adapter = ParticipantsEventAdapter(participantsItemArray)
+            }
+
+            backBtn.setOnClickListener {
+                // https://stackoverflow.com/questions/4038479/android-go-back-to-previous-activity
+                super.onBackPressed()
+            }
+        }
+
+    }
+    fun createRC(event: EventModel, participants: RecyclerView) {
+        participantsItemArray.clear()
+        lifecycleScope.launch {
+            for (people in event.participants) {
+                var person = DatabaseHelper.getUserFromDB(people)
+                person?.let { participantsItemArray.add(it.username) }
+            }
+            participants.adapter = ParticipantsEventAdapter(participantsItemArray)
+
         }
     }
+
 }

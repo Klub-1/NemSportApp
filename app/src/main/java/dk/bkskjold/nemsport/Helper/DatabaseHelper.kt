@@ -25,8 +25,8 @@ object DatabaseHelper {
 
 
     fun createEventInDB(event: EventModel) {
-        db.collection("events").add(event).addOnSuccessListener { documentReference ->
-            Log.d("DBHelper", "DocumentSnapshot added with ID: ${documentReference.id}")
+        db.collection("events").document(event.id).set(event).addOnSuccessListener { documentReference ->
+            Log.d("DBHelper", "DocumentSnapshot added with ID:")
         }
             .addOnFailureListener { e ->
                 Log.w("DBHelper", "Error adding document", e)
@@ -93,6 +93,16 @@ object DatabaseHelper {
         return snapshot.toObjects(EventModel::class.java)
     }
 
+
+    suspend fun updateParticapents(event: EventModel){
+        val snapshot = db
+            .collection("events")
+            .document(event.id)
+            .set(event)
+            .await()
+
+
+    }
 
 
     /*fun updateEventAttendanceInDB(userID:String, attending:Boolean, event:EventModel){

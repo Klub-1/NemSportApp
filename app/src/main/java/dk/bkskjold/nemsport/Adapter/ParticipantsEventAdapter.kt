@@ -12,7 +12,7 @@ import dk.bkskjold.nemsport.R
 import dk.bkskjold.nemsport.UI.EventActivity
 import java.text.SimpleDateFormat
 
-class ParticipantsEventAdapter(private val _participants: List<StringItem>) : RecyclerView.Adapter<ParticipantsEventAdapter.ViewHolder>() {
+class ParticipantsEventAdapter(private val _participants: List<String>) : RecyclerView.Adapter<ParticipantsEventAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,7 +34,7 @@ class ParticipantsEventAdapter(private val _participants: List<StringItem>) : Re
         // sets the text to the textview from our itemHolder class
 
 
-        holder.participantsView.text = participant.stringItem
+        holder.participantsView.text = participant.toString()
     }
 
 

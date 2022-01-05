@@ -15,6 +15,8 @@ import kotlinx.coroutines.*
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 
 class HomeFragment : Fragment() {
@@ -39,7 +41,6 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
 
         val todayRecyclerView: RecyclerView = binding.todayRV
         eventAdapter = TodayEventAdapter(_eventList)
