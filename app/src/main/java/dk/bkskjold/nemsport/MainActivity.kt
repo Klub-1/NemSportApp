@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
 
-
         // Check memory if a user is already logged in
         // Inspired by user @Leenah on Stackoverflow:
         // https://stackoverflow.com/questions/22262463/firebase-how-to-keep-an-android-user-logged-in
