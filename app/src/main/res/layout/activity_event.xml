@@ -83,7 +83,8 @@
         android:id="@+id/signUpBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:background="@drawable/round_border_red"
+        android:layout_margin="10dp"
         android:text="@string/join" />
 
     <Button
@@ -91,8 +92,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/signUpBtn"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="5dp"
+        android:layout_margin="10dp"
+        android:textColor="@color/bk_red"
+        android:background="@drawable/round_border_white"
         android:text="@string/back" />
 
 </RelativeLayout>

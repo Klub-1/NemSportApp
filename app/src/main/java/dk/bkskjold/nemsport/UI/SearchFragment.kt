@@ -48,8 +48,6 @@ class SearchFragment : Fragment() {
     private lateinit var calendarViewSearch: CalendarView
     private lateinit var calendarToggleFL: FrameLayout
 
-    private  lateinit var topViewLL: LinearLayout
-
     val now = Calendar.getInstance()
 
     var model = arrayListOf<EventModel>()
@@ -115,11 +113,14 @@ class SearchFragment : Fragment() {
     private fun initViews(view: View) {
         calendarViewSearch = view.findViewById(R.id.calendarViewSearch)
         calendarToggleFL = view.findViewById(R.id.calendarToggleFL)
-        topViewLL = view.findViewById(R.id.topViewLL)
 
         menuFab = view.findViewById(R.id.menuFab)
         createFab = view.findViewById(R.id.createFab)
         filterFab = view.findViewById(R.id.filterFab)
+
+        menuFab.setColorFilter(resources.getColor(R.color.white));
+        createFab.setColorFilter(resources.getColor(R.color.white));
+        filterFab.setColorFilter(resources.getColor(R.color.white));
 
     }
 
@@ -147,11 +148,17 @@ class SearchFragment : Fragment() {
                 menuFab.setImageResource(R.drawable.ic_action_menu_light)
                 createFab.visibility = View.GONE
                 filterFab.visibility = View.GONE
+                menuFab.setColorFilter(resources.getColor(R.color.white));
+                createFab.setColorFilter(resources.getColor(R.color.white));
+                filterFab.setColorFilter(resources.getColor(R.color.white));
                 FAB_IS_OPEN = false
             }else{
                 menuFab.setImageResource(R.drawable.ic_action_close_light)
                 createFab.visibility = View.VISIBLE
                 filterFab.visibility = View.VISIBLE
+                menuFab.setColorFilter(resources.getColor(R.color.white));
+                createFab.setColorFilter(resources.getColor(R.color.white));
+                filterFab.setColorFilter(resources.getColor(R.color.white));
                 FAB_IS_OPEN = true
             }
         }
