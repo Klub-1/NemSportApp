@@ -1,6 +1,5 @@
 package dk.bkskjold.nemsport.UI
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,24 +9,20 @@ import android.view.ViewGroup
 import android.widget.CalendarView
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dk.bkskjold.nemsport.Adapter.CalendarEventAdapter
-import dk.bkskjold.nemsport.Adapter.TodayEventAdapter
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Helper.OnSwipeTouchListener
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
+import dk.bkskjold.nemsport.UI.edit_event.EventAdministrationActivity
 import dk.bkskjold.nemsport.databinding.FragmentCalendarBinding
-import dk.bkskjold.nemsport.databinding.FragmentHomeBinding
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.time.toDuration
 
 class SearchFragment : Fragment() {
 
@@ -44,6 +39,7 @@ class SearchFragment : Fragment() {
     private lateinit var menuFab: FloatingActionButton
     private lateinit var createFab: FloatingActionButton
     private lateinit var filterFab: FloatingActionButton
+    private lateinit var editEventFab: FloatingActionButton
 
     private lateinit var calendarViewSearch: CalendarView
     private lateinit var calendarToggleFL: FrameLayout
@@ -80,7 +76,7 @@ class SearchFragment : Fragment() {
         val root: View = binding.root
 
         initViews(root)
-
+        
         val eventRecyclerView: RecyclerView = binding.calendarRV
         eventAdapter = CalendarEventAdapter(_eventList)
         eventRecyclerView.adapter = eventAdapter
@@ -120,6 +116,7 @@ class SearchFragment : Fragment() {
         menuFab = view.findViewById(R.id.menuFab)
         createFab = view.findViewById(R.id.createFab)
         filterFab = view.findViewById(R.id.filterFab)
+        editEventFab = view.findViewById(R.id.editEventFab)
 
     }
 
@@ -147,11 +144,13 @@ class SearchFragment : Fragment() {
                 menuFab.setImageResource(R.drawable.ic_action_menu_light)
                 createFab.visibility = View.GONE
                 filterFab.visibility = View.GONE
+                editEventFab.visibility = View.GONE
                 FAB_IS_OPEN = false
             }else{
                 menuFab.setImageResource(R.drawable.ic_action_close_light)
                 createFab.visibility = View.VISIBLE
                 filterFab.visibility = View.VISIBLE
+                editEventFab.visibility = View.VISIBLE
                 FAB_IS_OPEN = true
             }
         }
@@ -159,6 +158,11 @@ class SearchFragment : Fragment() {
         createFab.setOnClickListener{
             startActivity(Intent(view.context, CreateEventActivity::class.java))
         }
+        
+        editEventFab.setOnClickListener{
+            startActivity(Intent(view.context, EventAdministrationActivity::class.java))
+        }
+        
     }
 
 

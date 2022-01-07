@@ -89,4 +89,17 @@
         android:layout_marginBottom="175dp"
         android:contentDescription="@string/filter" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editEventFab"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_action_dashboard_light"
+        android:layout_marginEnd="25dp"
+        app:backgroundTint="@color/bk_red"
+        android:layout_marginBottom="250dp"
+        android:contentDescription="@string/admin_event" />
+
 </RelativeLayout>

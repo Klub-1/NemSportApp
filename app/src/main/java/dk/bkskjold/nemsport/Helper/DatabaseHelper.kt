@@ -99,6 +99,18 @@ object DatabaseHelper {
         return snapshot.toObjects(EventModel::class.java)
     }
 
+    suspend fun getEventsCreatedByUserFromDB(uid: String): MutableList<EventModel> {
+
+        val snapshot = db
+            .collection("events")
+            .whereEqualTo("eventCreaterUID", uid)
+            .orderBy("eventTime")            
+            .get()
+            .await()
+
+        return snapshot.toObjects(EventModel::class.java)
+    }
+
 
 
     /*fun updateEventAttendanceInDB(userID:String, attending:Boolean, event:EventModel){

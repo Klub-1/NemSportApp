@@ -50,4 +50,9 @@
     <string name="wrong_password">Forkert adgangskode! Prøv igen!</string>
     <string name="fail_update_phonenumber">Fejl ved opdatering af telefonnummer</string>
     <string name="fail_update_email">Fejl ved opdatering af Email</string>
+    <string name="admin_event">Administre event</string>
+    <string name="admin_events">Administrer events</string>
+    <string name="back_button">Tilbage</string>
+    <string name="create_event">Opret Event</string>
+    <string name="update_event">Opdater event</string>
 </resources>

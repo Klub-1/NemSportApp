@@ -67,7 +67,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         editProfileCancelBtn.setOnClickListener{
-            startActivity(Intent(this, FragmentContainerActivity::class.java))
+            super.onBackPressed()
         }
 
 
