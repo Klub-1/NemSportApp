@@ -55,4 +55,7 @@
     <string name="Location">Placering</string>
     <string name="date">Dato</string>
     <string name="event_owner_desc">Du er admin på denne event</string>
+    <string name="book_field_time">"vælg tidspunkt"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

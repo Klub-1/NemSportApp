@@ -16,6 +16,7 @@ import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.Models.PitchModel
 import dk.bkskjold.nemsport.R
 import kotlinx.coroutines.launch
+import java.sql.Time
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -26,7 +27,8 @@ class CreateEventActivity : AppCompatActivity() {
 
     private var pitches: MutableList<PitchModel> = mutableListOf()
 
-
+    var timeSpinner: Spinner? = null
+    var pitchSpinner: Spinner? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +37,11 @@ class CreateEventActivity : AppCompatActivity() {
         val backBtn: Button = findViewById(R.id.backBtn)
         val picktime: ImageView = findViewById(R.id.datePicker)
         val pitchList = ArrayList<String>()
-        val pitchSpinner: Spinner = findViewById(R.id.spinner)
         val descView : EditText = findViewById<EditText>(R.id.descEt)
         val teamName = findViewById<EditText>(R.id.teamNameEt)
         val showDateTXT = findViewById<TextView>(R.id.show_date)
-
+        pitchSpinner = findViewById(dk.bkskjold.nemsport.R.id.spinner)
+        timeSpinner  = findViewById(R.id.timeSpinner)
 
 
 
@@ -52,8 +54,11 @@ class CreateEventActivity : AppCompatActivity() {
             val apapter: ArrayAdapter<String> = ArrayAdapter<String>(
                 baseContext, android.R.layout.simple_spinner_item, pitchList
             )
-            pitchSpinner.adapter = apapter
+            pitchSpinner?.adapter = apapter
         }
+
+
+        createTimeSpinner()
 
 
         picktime.setOnClickListener{
@@ -62,18 +67,23 @@ class CreateEventActivity : AppCompatActivity() {
             val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 showDateTXT.text = dayOfMonth.toString()+"-"+(month+1).toString()+"-"+year.toString()
                 chosenDate = Date(year-1900, month,dayOfMonth, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), now.get(Calendar.SECOND))
+                createTimeSpinner()
             }
             ,now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DATE))
 
             datePicker.show()
+
         }
 
         //teamsSpinner.getSelectedItem().toString()
         createEvent.setOnClickListener{
-            DatabaseHelper.createEventInDB(EventModel(teamName.text.toString()
+            chosenDate.hours = timeSpinner?.selectedItem.toString().toInt()
+            chosenDate.minutes = 0
+            chosenDate.seconds = 0
+            DatabaseHelper.createEventInDB(EventModel(findViewById<EditText>(R.id.teamNameEt).text.toString()
                 , Timestamp(chosenDate)
                 , descView.text.toString()
-                ,pitchSpinner.getSelectedItem().toString()
+                ,pitchSpinner?.getSelectedItem().toString()
                 , Firebase.auth.currentUser!!.uid.toString()
                 , ArrayList<String>()
                 , Firebase.database.reference.child("events").push().key!!
@@ -86,6 +96,28 @@ class CreateEventActivity : AppCompatActivity() {
             super.onBackPressed()
         }
 
+    }
+    fun createTimeSpinner(){
+
+        lifecycleScope.launch {
+            val chosenDateStart = Date(chosenDate.year,chosenDate.month,chosenDate.date,0,0,0)
+            val chosenDateEnd = Date(chosenDate.year,chosenDate.month,chosenDate.date,24,0,0)
+            val timeToPick:ArrayList<String> = arrayListOf()
+            for(i in 7..22) {
+                timeToPick.add(i.toString())
+            }
+
+            val eventsOnDay = DatabaseHelper.getEventsByDateFromDB(chosenDateStart,chosenDateEnd)
+            for (eventOnDay in eventsOnDay){
+                if(eventOnDay.pitches == pitchSpinner?.selectedItem.toString()){
+                    timeToPick.remove(eventOnDay.eventTime.toDate().hours.toString())
+                }
+            }
+            val apapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                baseContext, android.R.layout.simple_spinner_item, timeToPick
+            )
+            timeSpinner?.adapter = apapter
+        }
     }
 
     }
