@@ -53,7 +53,7 @@ class CalendarEventAdapter(private val eventList: List<EventModel>) : RecyclerVi
 
 
 
-        val sdf = SimpleDateFormat("EEE, d MMM yyyy HH:mm")
+        val sdf = SimpleDateFormat("dd-MM-yyyy - HH:mm:ss")
 
         // sets the text to the textview from our itemHolder class
         holder.timeView.text =  sdf.format(event.eventTime.toDate())
