@@ -13,6 +13,7 @@ import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.Models.StringItem
 import dk.bkskjold.nemsport.R
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 
 
 class EventActivity : AppCompatActivity() {
@@ -26,13 +27,27 @@ class EventActivity : AppCompatActivity() {
         val eventName = findViewById<TextView>(R.id.eventNameTextView)
         val eventDesc = findViewById<TextView>(R.id.desc)
         val backBtn = findViewById<Button>(R.id.backBtn)
-        val authorTextView = findViewById<TextView>(R.id.authTextView)
-        val eventDestination = findViewById<TextView>(R.id.placeTextView)
+        val authorTextView = findViewById<TextView>(R.id.eventCreatorTextView)
+        val eventDestination = findViewById<TextView>(R.id.locationTxt)
         val participants: RecyclerView = findViewById(R.id.userRecyclerView)
+        val dateView = findViewById<TextView>(R.id.dateTxt)
+        val sdf = SimpleDateFormat("EEE, d MMM yyyy HH:mm")
+
 
         eventDesc.text = event.eventDescription
         eventName.text = event.eventName
         eventDestination.text = event.pitches
+        dateView.text = sdf.format(event.eventTime.toDate())
+
+        val test = ArrayList<String>();
+        for (i in 0..19){
+            test.add(i.toString())
+        }
+        participants.adapter = ParticipantsEventAdapter(test)
+
+
+
+
 
         val signUpBtn = findViewById<Button>(R.id.signUpBtn)
 
@@ -53,6 +68,7 @@ class EventActivity : AppCompatActivity() {
         Log.d("DBHelper", "DocumentSnapshot added with ID:")
 
         var participantsItemArray = ArrayList<String>()
+
 
 
         //adds newly created list of StringItems
@@ -92,6 +108,7 @@ class EventActivity : AppCompatActivity() {
             }
         }
 
+
     }
     fun createRC(event: EventModel, participants: RecyclerView) {
         participantsItemArray.clear()
@@ -104,5 +121,6 @@ class EventActivity : AppCompatActivity() {
 
         }
     }
+
 
 }
