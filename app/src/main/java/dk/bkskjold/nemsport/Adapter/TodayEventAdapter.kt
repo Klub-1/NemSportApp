@@ -1,12 +1,15 @@
 package dk.bkskjold.nemsport.Adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
+import dk.bkskjold.nemsport.UI.EventActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,7 +22,7 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
         val inflater = LayoutInflater.from(parent.context)
 
         return when (viewType) {
-            R.layout.event_item -> ViewHolderItem(inflater.inflate(viewType, parent, false))
+            R.layout.all_event_item -> ViewHolderItem(inflater.inflate(viewType, parent, false))
 
             R.layout.event_item_divider -> ViewHolderDivider(inflater.inflate(viewType, parent, false))
 
@@ -31,6 +34,8 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
     class ViewHolderItem(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val timeView: TextView = itemView.findViewById(R.id.eventTimeTxt)
         val titleView: TextView = itemView.findViewById(R.id.eventTitleTxt)
+        val descView: TextView = itemView.findViewById(R.id.eventDescTxt)
+        val cardView: CardView = itemView.findViewById(R.id.eventCard)
     }
 
 
@@ -54,6 +59,14 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
                 holder.timeView.text = sdf.format(event.eventTime.toDate())
 
                 holder.titleView.text = event.eventName.toString()
+                holder.descView.text = event.eventDescription.toString()
+
+                holder.cardView.setOnClickListener {
+                    val intent = Intent(holder.itemView.context, EventActivity::class.java)
+                    intent.putExtra("event",event)
+                    holder.itemView.context.startActivity(intent)
+                }
+
             }
 
             is ViewHolderDivider -> {
@@ -70,7 +83,7 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
         return when (element.pitches) {
             "TopSecret" -> R.layout.event_item_divider // Only TopSecret will be displayed as a title
             // TODO: Fix this hack
-            else -> R.layout.event_item // All others
+            else -> R.layout.all_event_item // All others
         }
     }
 
