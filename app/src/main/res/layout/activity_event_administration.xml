@@ -33,5 +33,5 @@
         android:layout_margin="10dp"
         android:textColor="@color/bk_red"
         android:background="@drawable/round_border_white"
-        android:text="@string/back_button" />
+        android:text="@string/back" />
 </LinearLayout>

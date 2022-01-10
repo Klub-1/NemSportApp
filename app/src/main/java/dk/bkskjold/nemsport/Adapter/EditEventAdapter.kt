@@ -23,8 +23,6 @@ class EditEventAdapter(private val eventList: List<EventModel>) : RecyclerView.A
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.all_event_item, parent, false)
 
-
-
         return ViewHolder(view)
     }
 
@@ -33,8 +31,6 @@ class EditEventAdapter(private val eventList: List<EventModel>) : RecyclerView.A
 
         val event:EventModel = eventList[position]
 
-
-
         holder.cardEvent.setOnClickListener {
             val intent = Intent(holder.itemView.context,CreateEventActivity::class.java)
             intent.putExtra("update", true)
@@ -42,11 +38,7 @@ class EditEventAdapter(private val eventList: List<EventModel>) : RecyclerView.A
             holder.itemView.context.startActivity(intent)
         }
 
-
-
-
-
-        val sdf = SimpleDateFormat("EEE, d MMM yyyy HH:mm")
+        val sdf = SimpleDateFormat("dd-MM-yyyy - HH:mm:ss")
 
         // sets the text to the textview from our itemHolder class
         holder.timeView.text =  sdf.format(event.eventTime.toDate())
@@ -54,6 +46,9 @@ class EditEventAdapter(private val eventList: List<EventModel>) : RecyclerView.A
         holder.descView.text = event.eventDescription.toString()
 
         holder.titleView.text = event.eventName.toString()
+
+        holder.imageView.visibility = View.GONE
+        holder.acceptView.visibility = View.GONE
 
         /*if (event.participate){
             holder.acceptView.visibility = View.VISIBLE

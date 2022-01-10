@@ -3,10 +3,15 @@
     <string name="login">Log In</string>
     <string name="register">Sign Up</string>
     <string name="username">Username</string>
+
     <string name="password">Password</string>
+
     <string name="OR">or</string>
+
     <string name="title_activity_fragment_container">Hjem</string>
+
     <string name="title_home">Hjem</string>
+
     <string name="title_calendar">Kalender</string>
     <string name="title_profile">Profil</string>
     <string name="create">Opret</string>
@@ -15,24 +20,19 @@
     <string name="your_events">Dine events</string>
     <string name="today">I dag</string>
     <string name="tomorrow">I morgen</string>
-    <string name="register_guest">Sign Up som gæst</string>
-    <string name="register_member">Sign Up som medlem</string>
+
     <string name="mail">Email</string>
     <string name="participate">Tilmeldt!</string>
+
     <string name="title_activity_create_event">Opret event</string>
+
     <string name="team_name">Holdnavn</string>
     <string name="description_of_event">Beskriv dit event</string>
     <string name="when">Hvornår</string>
     <string name="back">Tilbage</string>
-    <string name="your_calendar">Din kalender</string>
+    <string name="your_calendar">Dine Tilmeldinger</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+
     <string name="login_failed">"Login failed"</string>
     <string name="forgot_psw">Glemt adgangskode?</string>
     <string name="full_name">Fulde navn</string>
@@ -40,6 +40,10 @@
     <string name="reset_password">Reset adgangskode</string>
     <string name="vælg_bane">Vælg en bane</string>
     <string name="join">tilslut</string>
+    <string name="home_today_text">I Dag:</string>
+    <string name="home_upcoming_text">Kommende:</string>
+    <string name="home_empty_text">You have no events</string>
+
     <string name="userpage_phone">Telefonnummer:</string>
     <string name="userpage_mail">Email:</string>
     <string name="edit_userpage_accept">Accepter Ændringer</string>
@@ -50,9 +54,13 @@
     <string name="wrong_password">Forkert adgangskode! Prøv igen!</string>
     <string name="fail_update_phonenumber">Fejl ved opdatering af telefonnummer</string>
     <string name="fail_update_email">Fejl ved opdatering af Email</string>
-    <string name="admin_event">Administre event</string>
+
     <string name="admin_events">Administrer events</string>
-    <string name="back_button">Tilbage</string>
+
     <string name="create_event">Opret Event</string>
+
     <string name="update_event">Opdater event</string>
+    <string name="book_field_time">Vælg tidspunkt</string>
+
+
 </resources>

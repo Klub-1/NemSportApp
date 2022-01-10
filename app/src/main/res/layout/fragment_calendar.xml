@@ -71,9 +71,11 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_action_add_light"
-        app:backgroundTint="@color/bk_red"
+        android:backgroundTint="@color/bk_red"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="100dp"
+        app:backgroundTint="@color/white"
+        app:borderWidth="1dp"
         android:contentDescription="@string/create" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -85,8 +87,10 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_action_filter_light"
         android:layout_marginEnd="25dp"
-        app:backgroundTint="@color/bk_red"
+        android:backgroundTint="@color/bk_red"
         android:layout_marginBottom="175dp"
+        app:backgroundTint="@color/white"
+        app:borderWidth="1dp"
         android:contentDescription="@string/filter" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -98,8 +102,10 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_action_dashboard_light"
         android:layout_marginEnd="25dp"
-        app:backgroundTint="@color/bk_red"
+        android:backgroundTint="@color/bk_red"
+        app:backgroundTint="@color/white"
+        app:borderWidth="1dp"
         android:layout_marginBottom="250dp"
-        android:contentDescription="@string/admin_event" />
+        android:contentDescription="@string/admin_events" />
 
 </RelativeLayout>
