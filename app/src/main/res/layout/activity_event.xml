@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.EventFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UI.EventActivity">
 
 
     <TextView
@@ -16,25 +17,52 @@
         android:textSize="30dp"
         />
 
+    <LinearLayout
+        android:id="@+id/authcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_below="@+id/eventNameTextView">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Arrangør:"
+            />
+
+        <TextView
+            android:id="@+id/authTextView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            />
+
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/deltagere"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/eventNameTextView"
+        android:layout_below="@+id/authcontainer"
         android:text="Deltagerliste"
         android:layout_centerHorizontal="true"
         android:textSize="15dp"
 
         />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@+id/deltagere"
         android:layout_alignParentStart="true"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
         tools:itemCount="10"
-
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
 
         />
@@ -59,27 +87,37 @@
         android:lines="8"
 
         />
-    <TextView
+
+    <LinearLayout
+        android:id="@+id/placeContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/desc"
-        android:id="@+id/placering"
-        android:textSize="15dp"
-        android:text="placering"
+        android:weightSum="2"
+        android:layout_below="@+id/desc">
 
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/placering"
-        android:id="@+id/placeTextView"
-        android:textSize="10dp"
-        android:text="placering"
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/placering"
+            android:textSize="15dp"
+            android:text="placering"
 
-        />
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/placeTextView"
+            android:textSize="15dp"
+            android:text="placering"
+
+            />
+
+    </LinearLayout>
 
     <Button
-        android:layout_below="@+id/placeTextView"
+        android:layout_above="@+id/backBtn"
         android:id="@+id/signUpBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,11 +126,11 @@
 
     <Button
         android:id="@+id/backBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/signUpBtn"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="5dp"
+        android:layout_margin="5dp"
         android:text="@string/back" />
 
 </RelativeLayout>

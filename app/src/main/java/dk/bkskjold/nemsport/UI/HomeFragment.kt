@@ -20,6 +20,8 @@ import dk.bkskjold.nemsport.R
 import java.util.*
 
 
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 
 class HomeFragment : Fragment() {
@@ -44,7 +46,6 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
 
         val todayRecyclerView: RecyclerView = binding.todayRV
         eventAdapter = TodayEventAdapter(_eventList)
