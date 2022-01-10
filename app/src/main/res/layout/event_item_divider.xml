@@ -8,21 +8,13 @@
     app:cardCornerRadius="0dp">
 
 
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/eventTitleTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:orientation="vertical">
+        android:textColor="@color/title"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/eventTitleTxt"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:textColor="@color/title"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
 
 </androidx.cardview.widget.CardView>
