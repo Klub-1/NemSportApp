@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat
 class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // create new views
+    // https://stackoverflow.com/questions/58968541/kotlin-recyclerview-with-2-view-types
+    // Solution by: @Gil Goldzweig
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
@@ -39,7 +41,8 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
         val titleView: TextView = itemView.findViewById(R.id.eventTitleTxt)
     }
 
-    // binds the list items to a view
+    // https://stackoverflow.com/questions/58968541/kotlin-recyclerview-with-2-view-types
+    // Solution by: @Gil Goldzweig
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
 

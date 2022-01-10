@@ -1,6 +1,7 @@
 package dk.bkskjold.nemsport.UI
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import com.google.firebase.Timestamp
 import dk.bkskjold.nemsport.R
+import java.util.*
+
+
+
 
 class HomeFragment : Fragment() {
 
@@ -53,9 +58,17 @@ class HomeFragment : Fragment() {
 
         return root
     }
+
+
     private fun cleanEventDataInput(eventList: MutableList<EventModel>) : MutableList<EventModel> {
         var newEventList: MutableList<EventModel> = mutableListOf()
-        val todayTimeStamp = Timestamp.now()
+        val todayTimeStamp = Timestamp.now().toDate()
+        val date = Date(todayTimeStamp.time)
+
+
+        val date = todayTimeStamp.toDate()
+
+
 
         eventList.sortBy { it.eventTime }
 
@@ -68,15 +81,23 @@ class HomeFragment : Fragment() {
 
 
         for (event in eventList) {
-            if (event.eventTime < todayTimeStamp && !todayDivider) {
-                newEventList.add(EventModel(eventName = todayString, pitches = "TopSecret"))
-                todayDivider = true
+            Log.w("DEBUGME", event.eventTime.toDate().toString() + " Compared to " + todayTimeStamp.toString() + " Whereas: "+ date.toString())
+            if (event.eventTime.toDate() == todayTimeStamp ) {
+                if (!todayDivider) {
+                    newEventList.add(EventModel(eventName = todayString, pitches = "TopSecret"))
+                    todayDivider = true
+                }
+                newEventList.add(event)
 
-            } else if (event.eventTime > todayTimeStamp && !upcomingDivider) {
-                newEventList.add(EventModel(eventName = upcomingString, pitches = "TopSecret"))
-                upcomingDivider = true
+
+            } else if (event.eventTime.toDate()  > todayTimeStamp) {
+                if (!upcomingDivider) {
+                    newEventList.add(EventModel(eventName = upcomingString, pitches = "TopSecret"))
+                    upcomingDivider = true
+                }
+                newEventList.add(event)
             }
-            newEventList.add(event)
+
         }
 
         if (eventList.size == 0) {
