@@ -92,8 +92,6 @@ class HomeFragment : Fragment() {
 
         for (event in eventList) {
 
-            // Get current user id
-            val isSignedUp = Firebase.auth.currentUser?.let { event.participants.contains(it.uid) }
 
             // Check if event time is today from 0:00 to 23:59
             if (event.eventTime.toDate() >= todayDateNoTime && event.eventTime.toDate() < tomorrowDateNoTime ) {
@@ -103,7 +101,7 @@ class HomeFragment : Fragment() {
                     todayDivider = true
                 }
                 // Add event to list if user is signed up
-                if(isSignedUp == true) newEventList.add(event)
+                if(event.participants.contains(Firebase.auth.uid)) newEventList.add(event)
 
 
                 // Check if event time is tomorrow from 0:00
@@ -116,7 +114,7 @@ class HomeFragment : Fragment() {
                 }
 
                 // Add event to list if user is signed up
-                if(isSignedUp == true) newEventList.add(event)
+                if(event.participants.contains(Firebase.auth.uid)) newEventList.add(event)
             }
         }
 
