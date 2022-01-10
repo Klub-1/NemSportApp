@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Jens/AndroidStudioProjects/NemSportApp/app/src/main/res/layout/activity_create_event.xml" value="0.33" />
         <entry key="..\:/Users/Jens/AndroidStudioProjects/NemSportApp/app/src/main/res/layout/activity_event.xml" value="0.21920289855072464" />
         <entry key="..\:/Users/Jens/AndroidStudioProjects/NemSportApp/app/src/main/res/layout/all_event_item.xml" value="0.21920289855072464" />
         <entry key="..\:/Users/Jens/AndroidStudioProjects/NemSportApp/app/src/main/res/layout/event_item.xml" value="0.21920289855072464" />

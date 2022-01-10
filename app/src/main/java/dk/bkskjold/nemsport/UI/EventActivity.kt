@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.Adapter.ParticipantsEventAdapter
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.EventModel
@@ -32,6 +34,9 @@ class EventActivity : AppCompatActivity() {
         val participants: RecyclerView = findViewById(R.id.userRecyclerView)
         val dateView = findViewById<TextView>(R.id.dateTxt)
         val sdf = SimpleDateFormat("EEE, d MMM yyyy HH:mm")
+        val signUpBtn = findViewById<Button>(R.id.signUpBtn)
+
+        val currentUser = Firebase.auth.currentUser!!.uid
 
 
         eventDesc.text = event.eventDescription
@@ -39,19 +44,15 @@ class EventActivity : AppCompatActivity() {
         eventDestination.text = event.pitches
         dateView.text = sdf.format(event.eventTime.toDate())
 
-        val test = ArrayList<String>();
-        for (i in 0..19){
-            test.add(i.toString())
-        }
-        participants.adapter = ParticipantsEventAdapter(test)
 
 
 
 
 
-        val signUpBtn = findViewById<Button>(R.id.signUpBtn)
 
-        if (!event.participants.contains(event.eventCreaterUID)) {
+
+
+        if (event.participants.contains(currentUser)) {
             signUpBtn.text = "afmeld"
             true
         } else {
@@ -75,38 +76,45 @@ class EventActivity : AppCompatActivity() {
 
 
         signUpBtn.setOnClickListener {
-            if (!event.participants.contains(event.eventCreaterUID)) {
-                lifecycleScope.launch {
-                    event.participants.add(event.eventCreaterUID)
-                    DatabaseHelper.updateParticapents(event)
-                    signUpBtn.text = "afmeld"
-                    true
-                    createRC(event,participants)
-                }
-            } else {
-                lifecycleScope.launch {
-                    event.participants.remove(event.eventCreaterUID)
-                    DatabaseHelper.updateParticapents(event)
-                    signUpBtn.text = "tilmeld"
-                    true
-                    createRC(event,participants)
+            lifecycleScope.launch {
+                if (!event.participants.contains(currentUser) ){
+                    lifecycleScope.launch {
+                        event.participants.add(currentUser)
+                        DatabaseHelper.updateParticapents(event)
+                        signUpBtn.text = "afmeld"
+                        true
+                        createRC(event, participants)
+                    }
+                } else {
+                    lifecycleScope.launch {
+                        event.participants.remove(currentUser)
+                        DatabaseHelper.updateParticapents(event)
+                        signUpBtn.text = "tilmeld"
+                        true
+                        createRC(event, participants)
+                    }
                 }
             }
         }
 
 
         lifecycleScope.launch {
+
+
+
             for (people in event.participants) {
                 var person = DatabaseHelper.getUserFromDB(people)
                 person?.let { participantsItemArray.add(it.username) }
                 participants.adapter = ParticipantsEventAdapter(participantsItemArray)
             }
 
+
             backBtn.setOnClickListener {
                 // https://stackoverflow.com/questions/4038479/android-go-back-to-previous-activity
                 super.onBackPressed()
             }
         }
+
 
 
     }
@@ -117,10 +125,12 @@ class EventActivity : AppCompatActivity() {
                 var person = DatabaseHelper.getUserFromDB(people)
                 person?.let { participantsItemArray.add(it.username) }
             }
+            DatabaseHelper.updateParticapents(event)
             participants.adapter = ParticipantsEventAdapter(participantsItemArray)
 
         }
     }
+
 
 
 }
