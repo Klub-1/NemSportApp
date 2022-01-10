@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var user: UserModel
+    private var user: UserModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,8 +42,8 @@ class ProfileFragment : Fragment() {
         if (!uid.equals(getString(R.string.unknown))){
             lifecycleScope.launch {
                 user = DatabaseHelper.getUserFromDB(uid)!!
-                profileNameTxt.text = user.username
-                profilePhoneTxt.text = user.phonenumber
+                profileNameTxt.text = user!!.username
+                profilePhoneTxt.text = user!!.phonenumber
             }
 
             profileMailTxt.text = Firebase.auth.currentUser?.email ?: getString(R.string.unknown)
