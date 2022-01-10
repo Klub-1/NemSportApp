@@ -10,27 +10,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NemSport">
         <activity
-            android:name=".UI.auth.ForgotPasswordActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".UI.auth.LoginActivity"
+            android:name=".UI.profile.EditProfileActivity"
             android:exported="true" />
+        <activity
+            android:name=".UI.auth.ForgotPasswordActivity"
+            android:exported="true"
+            android:parentActivityName=".UI.auth.LoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UI.auth.SignupActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UI.auth.LoginActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UI.EventActivity"
             android:exported="false" />
         <activity
             android:name=".UI.CreateEventActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
             android:label="@string/title_activity_create_event"
-            android:parentActivityName=".FragmentContainerActivity"/>
+            android:parentActivityName=".FragmentContainerActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".FragmentContainerActivity"
             android:exported="true"

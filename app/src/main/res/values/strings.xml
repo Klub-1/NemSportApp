@@ -45,4 +45,16 @@
     <string name="home_empty_text">You have no events</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="userpage_phone">Telefonnummer:</string>
+    <string name="userpage_mail">Email:</string>
+    <string name="edit_userpage_accept">Accepter Ændringer</string>
+    <string name="edit_userpage_cancel">Fortryd</string>
+    <string name="unknown">Ukendt</string>
+    <string name="input_password_to_confirm">Indtast kodeord for at bekræfte ændringer</string>
+    <string name="confirm_updates">Bekræft ændringer</string>
+    <string name="wrong_password">Forkert adgangskode! Prøv igen!</string>
+    <string name="fail_update_phonenumber">Fejl ved opdatering af telefonnummer</string>
+    <string name="fail_update_email">Fejl ved opdatering af Email</string>
+
 </resources>
