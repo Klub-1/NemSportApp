@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
 import dk.bkskjold.nemsport.R
 import java.util.*
 
@@ -61,7 +62,11 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     *
+     * Overly complicated method for handling event lists to input in recycler view
+     * First formats current time to get time for comparison
+     * Loops over all events in input
+     * Filters for old events, and if user is signed up
+     * Adds dividers between events based on time
      */
     private fun cleanEventDataInput(eventList: MutableList<EventModel>) : MutableList<EventModel> {
 
@@ -88,28 +93,38 @@ class HomeFragment : Fragment() {
         calOnlyToday.add(Calendar.DATE, 1)
         val tomorrowDateNoTime = calOnlyToday.time
 
-        Log.w("DEBUGME", tomorrowDateNoTime.toString())
 
         for (event in eventList) {
+
+            // Get current user id
+            val isSignedUp = Firebase.auth.currentUser?.let { event.participants.contains(it.uid) }
+
+            // Check if event time is today from 0:00 to 23:59
             if (event.eventTime.toDate() >= todayDateNoTime && event.eventTime.toDate() < tomorrowDateNoTime ) {
+                // Add divider if it is today and we havent seen the divider before
                 if (!todayDivider) {
                     newEventList.add(EventModel(eventName = todayString, pitches = "TopSecret"))
                     todayDivider = true
                 }
-                newEventList.add(event)
+                // Add event to list if user is signed up
+                if(isSignedUp == true) newEventList.add(event)
 
 
+                // Check if event time is tomorrow from 0:00
             } else if (event.eventTime.toDate()  > tomorrowDateNoTime) {
+
+                // Add divider if it is today and we havent seen the divider before
                 if (!upcomingDivider) {
                     newEventList.add(EventModel(eventName = upcomingString, pitches = "TopSecret"))
                     upcomingDivider = true
                 }
-                newEventList.add(event)
+
+                // Add event to list if user is signed up
+                if(isSignedUp == true) newEventList.add(event)
             }
-
-
         }
 
+        // Incase no events are found, add divider saying there were no events
         if (eventList.size == 0) {
             newEventList.add(EventModel(eventName = emptyString, pitches = "TopSecret"))
         }
