@@ -59,30 +59,38 @@ class HomeFragment : Fragment() {
         return root
     }
 
-
+    /**
+     *
+     */
     private fun cleanEventDataInput(eventList: MutableList<EventModel>) : MutableList<EventModel> {
+
         var newEventList: MutableList<EventModel> = mutableListOf()
-        val todayTimeStamp = Timestamp.now().toDate()
-        val date = Date(todayTimeStamp.time)
-
-
-        val date = todayTimeStamp.toDate()
-
+        val todayString = getString(R.string.home_today_text)
+        val upcomingString = getString(R.string.home_upcoming_text)
+        val emptyString = getString(R.string.home_empty_text)
+        var todayDivider = false
+        var upcomingDivider = false
 
 
         eventList.sortBy { it.eventTime }
 
-        var todayDivider = false
-        var upcomingDivider = false
+        // The following lines are only required because java/kotlin
+        // Has no buildt in way of extracting only the time from a date/timestamp object
+        val todayDate = Timestamp.now().toDate()
+        val calOnlyToday = Calendar.getInstance()
+        calOnlyToday.time = todayDate
+        calOnlyToday[Calendar.HOUR_OF_DAY] = 0
+        calOnlyToday[Calendar.MINUTE] = 0
+        calOnlyToday[Calendar.SECOND] = 0
+        calOnlyToday[Calendar.MILLISECOND] = 0
+        val todayDateNoTime = calOnlyToday.time
+        calOnlyToday.add(Calendar.DATE, 1)
+        val tomorrowDateNoTime = calOnlyToday.time
 
-        val todayString = getString(R.string.home_today_text)
-        val upcomingString = getString(R.string.home_upcoming_text)
-        val emptyString = getString(R.string.home_empty_text)
-
+        Log.w("DEBUGME", tomorrowDateNoTime.toString())
 
         for (event in eventList) {
-            Log.w("DEBUGME", event.eventTime.toDate().toString() + " Compared to " + todayTimeStamp.toString() + " Whereas: "+ date.toString())
-            if (event.eventTime.toDate() == todayTimeStamp ) {
+            if (event.eventTime.toDate() >= todayDateNoTime && event.eventTime.toDate() < tomorrowDateNoTime ) {
                 if (!todayDivider) {
                     newEventList.add(EventModel(eventName = todayString, pitches = "TopSecret"))
                     todayDivider = true
@@ -90,13 +98,14 @@ class HomeFragment : Fragment() {
                 newEventList.add(event)
 
 
-            } else if (event.eventTime.toDate()  > todayTimeStamp) {
+            } else if (event.eventTime.toDate()  > tomorrowDateNoTime) {
                 if (!upcomingDivider) {
                     newEventList.add(EventModel(eventName = upcomingString, pitches = "TopSecret"))
                     upcomingDivider = true
                 }
                 newEventList.add(event)
             }
+
 
         }
 
