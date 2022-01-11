@@ -1,6 +1,7 @@
 package dk.bkskjold.nemsport.UI
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,10 +50,6 @@ class HomeFragment : Fragment() {
         todayRecyclerView.adapter = eventAdapter
         todayRecyclerView.layoutManager = LinearLayoutManager(activity, OrientationHelper.VERTICAL, false)
 
-        lifecycleScope.launch {
-            _eventList += cleanEventDataInput(DatabaseHelper.getEventsFromDB())
-            eventAdapter.notifyDataSetChanged()
-        }
 
         return root
     }
@@ -91,38 +88,51 @@ class HomeFragment : Fragment() {
 
 
         for (event in eventList) {
-
-
+            Log.w("DEBUGME:", event.toString())
             // Check if event time is today from 0:00 to 23:59
             if (event.eventTime.toDate() >= todayDateNoTime && event.eventTime.toDate() < tomorrowDateNoTime ) {
-                // Add divider if it is today and we havent seen the divider before
-                if (!todayDivider) {
-                    newEventList.add(EventModel(eventName = todayString, pitches = "TopSecret"))
-                    todayDivider = true
-                }
-                // Add event to list if user is signed up
-                if(event.participants.contains(Firebase.auth.uid)) newEventList.add(event)
 
+
+                // Add event to list if user is signed up
+                if(event.participants.contains(Firebase.auth.uid)) {
+                    // Add divider if it is today and we havent seen the divider before
+                    if (!todayDivider) {
+                        newEventList.add(EventModel(eventName = todayString, pitches = "TopSecret"))
+                        todayDivider = true
+                    }
+                    newEventList.add(event)
+                }
 
                 // Check if event time is tomorrow from 0:00
             } else if (event.eventTime.toDate()  > tomorrowDateNoTime) {
 
-                // Add divider if it is today and we havent seen the divider before
-                if (!upcomingDivider) {
-                    newEventList.add(EventModel(eventName = upcomingString, pitches = "TopSecret"))
-                    upcomingDivider = true
+                // Add event to list if user is signed up
+                if(event.participants.contains(Firebase.auth.uid)) {
+                    // Add divider if it is today and we havent seen the divider before
+                    if (!upcomingDivider) {
+                        newEventList.add(EventModel(eventName = upcomingString, pitches = "TopSecret"))
+                        upcomingDivider = true
+                    }
+                    newEventList.add(event)
                 }
 
-                // Add event to list if user is signed up
-                if(event.participants.contains(Firebase.auth.uid)) newEventList.add(event)
             }
         }
 
         // Incase no events are found, add divider saying there were no events
-        if (eventList.size == 0) {
+        if (newEventList.size == 0) {
             newEventList.add(EventModel(eventName = emptyString, pitches = "TopSecret"))
         }
 
         return newEventList
+    }
+    
+    override fun onResume(){
+        super.onResume()
+        _eventList.clear()
+        lifecycleScope.launch {
+            _eventList.addAll( cleanEventDataInput(DatabaseHelper.getEventsFromDB()))
+            eventAdapter.notifyDataSetChanged()
+        }
     }
 }
