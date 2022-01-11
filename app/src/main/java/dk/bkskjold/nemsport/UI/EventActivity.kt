@@ -112,6 +112,7 @@ class EventActivity : AppCompatActivity() {
             backBtn.setOnClickListener {
                 // https://stackoverflow.com/questions/4038479/android-go-back-to-previous-activity
                 super.onBackPressed()
+                finish()
             }
         }
 

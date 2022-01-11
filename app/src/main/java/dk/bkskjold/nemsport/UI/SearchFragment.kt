@@ -53,10 +53,7 @@ class SearchFragment : Fragment() {
     val now = Calendar.getInstance()
 
     var model = arrayListOf<EventModel>()
-    override fun onResume() {
-        super.onResume()
 
-    }
     /*
     RECYCLERVIEW
      */
@@ -68,6 +65,7 @@ class SearchFragment : Fragment() {
     private lateinit var eventAdapter: CalendarEventAdapter
     private var _binding: FragmentCalendarBinding? = null
     private var _eventList : MutableList<EventModel> = mutableListOf()
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -163,6 +161,13 @@ class SearchFragment : Fragment() {
             startActivity(Intent(view.context, CreateEventActivity::class.java))
         }
     }
-
-
+    override fun onResume(){
+        super.onResume()
+        _eventList.clear()
+        lifecycleScope.launch {
+            _eventList.addAll( DatabaseHelper.getEventsByDateFromDB(Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),0,0)
+                    ,Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),23,59)))
+            eventAdapter.notifyDataSetChanged()
+        }
+        }
 }

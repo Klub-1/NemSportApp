@@ -21,6 +21,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CreateEventActivity : AppCompatActivity() {
+    //
 
     val now = Calendar.getInstance()
     private var chosenDate = Date()
@@ -38,12 +39,14 @@ class CreateEventActivity : AppCompatActivity() {
         val picktime: ImageView = findViewById(R.id.datePicker)
         val pitchList = ArrayList<String>()
         val descView : EditText = findViewById<EditText>(R.id.descEt)
-        val teamName = findViewById<EditText>(R.id.teamNameEt)
+        val eventName = findViewById<EditText>(R.id.teamNameEt)
         val showDateTXT = findViewById<TextView>(R.id.show_date)
         pitchSpinner = findViewById(dk.bkskjold.nemsport.R.id.spinner)
         timeSpinner  = findViewById(R.id.timeSpinner)
+        eventName.text = null
 
 
+        showDateTXT.text = now.get(Calendar.DAY_OF_MONTH).toString() + "-" + (now.get(Calendar.MONTH)+1) +"-" + now.get(Calendar.YEAR)
 
 
         lifecycleScope.launch {
@@ -77,19 +80,27 @@ class CreateEventActivity : AppCompatActivity() {
 
         //teamsSpinner.getSelectedItem().toString()
         createEvent.setOnClickListener{
+
+            val currentDate = Date(now.get(Calendar.YEAR)-1900, now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH), 0, 0, 0)
+
+            if(!(eventName.text.toString().trim().length == 0) && chosenDate.after(currentDate) ){
+                val participants = ArrayList<String>()
+                participants.add(Firebase.auth.currentUser!!.uid.toString())
+
             chosenDate.hours = timeSpinner?.selectedItem.toString().toInt()
             chosenDate.minutes = 0
             chosenDate.seconds = 0
-            DatabaseHelper.createEventInDB(EventModel(findViewById<EditText>(R.id.teamNameEt).text.toString()
+            DatabaseHelper.createEventInDB(EventModel(eventName.text.toString().trim()
                 , Timestamp(chosenDate)
                 , descView.text.toString()
                 ,pitchSpinner?.getSelectedItem().toString()
                 , Firebase.auth.currentUser!!.uid.toString()
-                , ArrayList<String>()
+                , participants
                 , Firebase.database.reference.child("events").push().key!!
             ))
             startActivity(Intent(this,FragmentContainerActivity::class.java))
         }
+    }
 
         backBtn.setOnClickListener{
             // https://stackoverflow.com/questions/4038479/android-go-back-to-previous-activity
