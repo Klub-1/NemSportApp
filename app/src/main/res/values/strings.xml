@@ -24,7 +24,7 @@
     <string name="description_of_event">Beskriv dit event</string>
     <string name="when">Hvornår</string>
     <string name="back">Tilbage</string>
-    <string name="your_calendar">Dine Tilmeldinger</string>
+    <string name="your_calendar">Din kalender</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -40,12 +40,6 @@
     <string name="reset_password">Reset adgangskode</string>
     <string name="vælg_bane">Vælg en bane</string>
     <string name="join">tilslut</string>
-    <string name="home_today_text">I Dag:</string>
-    <string name="home_upcoming_text">Kommende:</string>
-    <string name="home_empty_text">You have no events</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="userpage_phone">Telefonnummer:</string>
     <string name="userpage_mail">Email:</string>
     <string name="edit_userpage_accept">Accepter Ændringer</string>
@@ -56,5 +50,16 @@
     <string name="wrong_password">Forkert adgangskode! Prøv igen!</string>
     <string name="fail_update_phonenumber">Fejl ved opdatering af telefonnummer</string>
     <string name="fail_update_email">Fejl ved opdatering af Email</string>
+    <string name="participants">Deltagere</string>
+    <string name="description">Beskrivelse</string>
+    <string name="Location">Placering</string>
+    <string name="date">Dato</string>
+    <string name="event_owner_desc">Du er admin på denne event</string>
+    <string name="book_field_time">"vælg tidspunkt"</string>
+    <string name="home_today_text">I Dag:</string>
+    <string name="home_upcoming_text">Kommende:</string>
+    <string name="home_empty_text">You have no events</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

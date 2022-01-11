@@ -53,7 +53,10 @@ class SearchFragment : Fragment() {
     val now = Calendar.getInstance()
 
     var model = arrayListOf<EventModel>()
+    override fun onResume() {
+        super.onResume()
 
+    }
     /*
     RECYCLERVIEW
      */

@@ -40,7 +40,8 @@ class ParticipantsEventAdapter(private val _participants: List<String>) : Recycl
 
 
     override fun getItemCount(): Int {
-        return _participants.size
+            return _participants.size
+
     }
 
 
