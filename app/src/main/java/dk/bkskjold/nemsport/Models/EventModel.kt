@@ -9,13 +9,13 @@ import kotlin.collections.ArrayList
 
 //https://medium.com/@hgarg701/parcelable-in-android-using-kotlin-pass-object-from-one-activity-to-another-c34801d7ff03
 data class EventModel(
-    val eventName: String? = "",
-    val eventTime:Timestamp = Timestamp(Calendar.getInstance().getTime()),
-    val eventDescription:String = "",
-    val pitches:String = "",
-    val eventCreaterUID:String = "",
-    val participants:ArrayList<String> = ArrayList(),
-    val id: String = ""
+        var eventName: String? = "",
+        var eventTime:Timestamp = Timestamp(Calendar.getInstance().getTime()),
+        var eventDescription:String = "",
+        var pitches:String = "",
+        val eventCreaterUID:String = "",
+        val participants:ArrayList<String> = ArrayList(),
+        val id: String = ""
 )  : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),

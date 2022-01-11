@@ -118,7 +118,6 @@ class SearchFragment : Fragment() {
 
         menuFab = view.findViewById(R.id.menuFab)
         createFab = view.findViewById(R.id.createFab)
-        filterFab = view.findViewById(R.id.filterFab)
         editEventFab = view.findViewById(R.id.editEventFab)
 
     }
@@ -146,13 +145,11 @@ class SearchFragment : Fragment() {
             if(FAB_IS_OPEN){
                 menuFab.setImageResource(R.drawable.ic_action_menu_light)
                 createFab.visibility = View.GONE
-                filterFab.visibility = View.GONE
                 editEventFab.visibility = View.GONE
                 FAB_IS_OPEN = false
             }else{
                 menuFab.setImageResource(R.drawable.ic_action_close_light)
                 createFab.visibility = View.VISIBLE
-                filterFab.visibility = View.VISIBLE
                 editEventFab.visibility = View.VISIBLE
                 FAB_IS_OPEN = true
             }

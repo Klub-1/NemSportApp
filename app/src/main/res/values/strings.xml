@@ -59,7 +59,12 @@
     <string name="home_today_text">I Dag:</string>
     <string name="home_upcoming_text">Kommende:</string>
     <string name="home_empty_text">You have no events</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="admin_event">Administre event</string>
+    <string name="admin_events">Administrer events</string>
+    <string name="back_button">Tilbage</string>
+    <string name="create_event">Opret Event</string>
+    <string name="update_event">Opdater event</string>
+    <string name="delete_event">Slet event</string>
+    <string name="update_fail">Der skete en fejl! Prøv igen!</string>
+    <string name="fail_delete">Fejl ved sletning af event</string>
 </resources>
