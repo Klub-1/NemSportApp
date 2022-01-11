@@ -2,11 +2,8 @@ package dk.bkskjold.nemsport.Models
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.sql.Struct
 import com.google.firebase.Timestamp
-import com.google.type.Date
 import java.util.*
-import java.io.Serializable
 import kotlin.collections.ArrayList
 
 
