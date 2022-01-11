@@ -73,6 +73,7 @@ class HomeFragment : Fragment() {
         var todayDivider = false
         var upcomingDivider = false
 
+        newEventList.clear()
 
         eventList.sortBy { it.eventTime }
 
@@ -124,5 +125,13 @@ class HomeFragment : Fragment() {
         }
 
         return newEventList
+    }
+    override fun onResume(){
+        super.onResume()
+        _eventList.clear()
+        lifecycleScope.launch {
+            _eventList.addAll( cleanEventDataInput(DatabaseHelper.getEventsFromDB()))
+            eventAdapter.notifyDataSetChanged()
+        }
     }
 }
