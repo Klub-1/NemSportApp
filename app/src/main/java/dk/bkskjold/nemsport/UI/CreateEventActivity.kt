@@ -21,6 +21,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class CreateEventActivity : AppCompatActivity() {
+    //
 
     val now = Calendar.getInstance()
     private var chosenDate = Date()
@@ -44,6 +45,7 @@ class CreateEventActivity : AppCompatActivity() {
         timeSpinner  = findViewById(R.id.timeSpinner)
 
 
+        showDateTXT.text = now.get(Calendar.DAY_OF_MONTH).toString() + "-" + (now.get(Calendar.MONTH)+1) +"-" + now.get(Calendar.YEAR)
 
 
         lifecycleScope.launch {
