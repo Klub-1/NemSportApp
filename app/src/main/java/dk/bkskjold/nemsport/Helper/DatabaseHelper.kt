@@ -86,6 +86,17 @@ object DatabaseHelper {
         return userRef.set(user)
     }
 
+    fun updateEventInDB(event: EventModel): Task<Void> {
+        val docRef = db.collection("events").document(event.id)
+
+        return docRef.set(event)
+    }
+    
+    fun deleteEventInDB(event: EventModel): Task<Void> {
+        val docRef = db.collection("events").document(event.id)        
+        return docRef.delete()
+    }
+
     suspend fun getEventsByDateFromDB( dateStart:Date,dateEnd:Date): MutableList<EventModel> {
 
         val snapshot = db
@@ -93,6 +104,18 @@ object DatabaseHelper {
             .orderBy("eventTime")
             .startAt(dateStart)
             .endAt(dateEnd)
+            .get()
+            .await()
+
+        return snapshot.toObjects(EventModel::class.java)
+    }
+
+    suspend fun getEventsCreatedByUserFromDB(uid: String): MutableList<EventModel> {
+
+        val snapshot = db
+            .collection("events")
+            .whereEqualTo("eventCreaterUID", uid)
+            .orderBy("eventTime")            
             .get()
             .await()
 
