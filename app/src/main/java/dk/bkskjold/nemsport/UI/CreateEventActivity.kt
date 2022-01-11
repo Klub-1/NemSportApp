@@ -80,7 +80,10 @@ class CreateEventActivity : AppCompatActivity() {
 
         //teamsSpinner.getSelectedItem().toString()
         createEvent.setOnClickListener{
-            if(!(eventName.text.toString().trim().length == 0) ){
+
+            val currentDate = Date(now.get(Calendar.YEAR)-1900, now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH), 0, 0, 0)
+
+            if(!(eventName.text.toString().trim().length == 0) && chosenDate.after(currentDate) ){
                 val participants = ArrayList<String>()
                 participants.add(Firebase.auth.currentUser!!.uid.toString())
 
