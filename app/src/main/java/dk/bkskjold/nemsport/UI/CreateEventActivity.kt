@@ -38,10 +38,11 @@ class CreateEventActivity : AppCompatActivity() {
         val picktime: ImageView = findViewById(R.id.datePicker)
         val pitchList = ArrayList<String>()
         val descView : EditText = findViewById<EditText>(R.id.descEt)
-        val teamName = findViewById<EditText>(R.id.teamNameEt)
+        val eventName = findViewById<EditText>(R.id.teamNameEt)
         val showDateTXT = findViewById<TextView>(R.id.show_date)
         pitchSpinner = findViewById(dk.bkskjold.nemsport.R.id.spinner)
         timeSpinner  = findViewById(R.id.timeSpinner)
+        eventName.text = null
 
 
 
@@ -77,19 +78,24 @@ class CreateEventActivity : AppCompatActivity() {
 
         //teamsSpinner.getSelectedItem().toString()
         createEvent.setOnClickListener{
+            if(!(eventName.text.toString().trim().length == 0) ){
+                val participants = ArrayList<String>()
+                participants.add(Firebase.auth.currentUser!!.uid.toString())
+
             chosenDate.hours = timeSpinner?.selectedItem.toString().toInt()
             chosenDate.minutes = 0
             chosenDate.seconds = 0
-            DatabaseHelper.createEventInDB(EventModel(findViewById<EditText>(R.id.teamNameEt).text.toString()
+            DatabaseHelper.createEventInDB(EventModel(eventName.text.toString().trim()
                 , Timestamp(chosenDate)
                 , descView.text.toString()
                 ,pitchSpinner?.getSelectedItem().toString()
                 , Firebase.auth.currentUser!!.uid.toString()
-                , ArrayList<String>()
+                , participants
                 , Firebase.database.reference.child("events").push().key!!
             ))
             startActivity(Intent(this,FragmentContainerActivity::class.java))
         }
+    }
 
         backBtn.setOnClickListener{
             // https://stackoverflow.com/questions/4038479/android-go-back-to-previous-activity
