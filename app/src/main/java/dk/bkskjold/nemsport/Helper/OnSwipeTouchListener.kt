@@ -11,7 +11,7 @@ import kotlin.math.abs
 
 
 /*
-* THIS FILE IS TAKEN FROM
+* THIS FILE IS DIRECTLY COPIED FROM
 * https://www.tutorialspoint.com/how-to-handle-swipe-gestures-in-kotlin
 */
 
