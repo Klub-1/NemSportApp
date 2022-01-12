@@ -2,15 +2,10 @@ package dk.bkskjold.nemsport.Helper
 
 import android.annotation.SuppressLint
 import android.util.Log
-import com.firebase.ui.auth.data.model.User
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import dk.bkskjold.nemsport.Models.ClubModel
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.Models.PitchModel
 import dk.bkskjold.nemsport.Models.UserModel

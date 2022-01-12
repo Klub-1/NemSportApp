@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +14,6 @@ import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.UserModel
 import dk.bkskjold.nemsport.R
-import dk.bkskjold.nemsport.UI.EventActivity
 import dk.bkskjold.nemsport.UI.auth.LoginActivity
 import kotlinx.coroutines.launch
 

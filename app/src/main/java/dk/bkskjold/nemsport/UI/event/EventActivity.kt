@@ -1,8 +1,7 @@
-package dk.bkskjold.nemsport.UI
+package dk.bkskjold.nemsport.UI.event
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
@@ -42,7 +41,6 @@ class EventActivity : AppCompatActivity() {
         eventName.text = event.eventName
         eventDestination.text = event.pitches
         dateView.text = sdf.format(event.eventTime.toDate())
-
 
         //sets sign up button text to "afmeld" if user is already signed up for event or "tilmelding" if not
         if (event.participants.contains(currentUser)) {
@@ -134,7 +132,7 @@ class EventActivity : AppCompatActivity() {
             }
 
             // DatabaseHelper.updateParticapents(event)
-
+            
             // defines recyclerviews adapter
             participants.adapter = ParticipantsEventAdapter(participantsItemArray)
 
