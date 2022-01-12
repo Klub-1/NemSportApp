@@ -23,15 +23,15 @@ class ForgotPasswordActivity : AppCompatActivity() {
         forgotPasswordBtn.setOnClickListener {
             val mail: String = mailEt.text.toString() // Edittext field for user to enter email
 
-            if (checkforempty(mail)){
+            if (checkforempty(mail)){ // If field isn't empty
                 // Based on
                     // https://morioh.com/p/e96e178d3510
-                auth.sendPasswordResetEmail(mail)
+                auth.sendPasswordResetEmail(mail) // Firestore command to send a reset password mail
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            startActivity(Intent(this, LoginActivity::class.java))
+                            startActivity(Intent(this, LoginActivity::class.java)) // Returns to login screen on success
                         } else {
-                            Toast.makeText(this, "Unable to send password reset", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Unable to send password reset", Toast.LENGTH_LONG).show() // Shows user a message on failure
                         }
                     }
             }

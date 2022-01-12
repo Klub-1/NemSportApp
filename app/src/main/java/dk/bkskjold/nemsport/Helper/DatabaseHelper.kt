@@ -17,7 +17,7 @@ import dk.bkskjold.nemsport.Models.UserModel
 import kotlinx.coroutines.tasks.await
 import java.util.*
 
-
+// Kotlin Singleton creation
 object DatabaseHelper {
 
     @SuppressLint("StaticFieldLeak")

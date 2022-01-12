@@ -28,19 +28,24 @@ class EventAdministrationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_administration)
 
+        // Setup recyclerview and adapter
         val eventRecyclerView: RecyclerView = findViewById(R.id.edit_eventsRV)
         eventAdapter = EditEventAdapter(_eventList)
         eventRecyclerView.adapter = eventAdapter
 
         backToCalendarBtn = findViewById(R.id.backToCalendarBtn)
 
+        // go back to last used activity
         backToCalendarBtn.setOnClickListener{
             super.onBackPressed()
         }
 
+        // Get user ID - if null return UNKNOWN
         val uid: String = Firebase.auth.currentUser?.uid ?: getString(R.string.unknown)
 
+        // Check if uid is not null
         if (uid != getString(R.string.unknown)) {
+            // Get events created by user
             lifecycleScope.launch {
                 _eventList += DatabaseHelper.getEventsCreatedByUserFromDB(uid)
                 eventAdapter.notifyDataSetChanged()
