@@ -46,7 +46,7 @@
     <string name="Location">Placering</string>
     <string name="date">Dato</string>
     <string name="event_owner_desc">Du er admin på denne event</string>
-    <string name="book_field_time">"vælg tidspunkt"</string>
+    <string name="book_field_time">"Vælg tidspunkt"</string>
     <string name="home_today_text">I Dag:</string>
     <string name="home_upcoming_text">Kommende:</string>
     <string name="home_empty_text">Ingen events</string>
