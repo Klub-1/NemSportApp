@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Logs user in with entered email and password
         loginBtn.setOnClickListener{
-            val mail: String = mailEt.text.toString()
+            val mail: String = mailEt.text.toString().trim()
             val psw: String = pswEt.text.toString()
             if (checkforempty(mail) && checkforempty(psw)){ login(mail = mail, psw = psw) } // If fields aren't empty attempts to login with entered credentials
         }

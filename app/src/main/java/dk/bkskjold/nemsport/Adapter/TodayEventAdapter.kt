@@ -9,8 +9,8 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
-import dk.bkskjold.nemsport.UI.EventActivity
 import java.text.SimpleDateFormat
+import dk.bkskjold.nemsport.UI.event.EventActivity
 
 
 class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

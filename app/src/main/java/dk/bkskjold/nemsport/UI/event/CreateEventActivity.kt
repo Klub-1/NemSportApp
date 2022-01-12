@@ -71,7 +71,7 @@ class CreateEventActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     pitches = DatabaseHelper.getPitchesFromDB()
                     for (pitchNames in pitches) {
-                        pitchList.add(pitchNames.pitchNames)
+                        pitchList.add(pitchNames.pitchName)
                     }
                     val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                             baseContext, android.R.layout.simple_spinner_item, pitchList
@@ -118,7 +118,7 @@ class CreateEventActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 pitches = DatabaseHelper.getPitchesFromDB()
                 for (pitchNames in pitches) {
-                    pitchList.add(pitchNames.pitchNames)
+                    pitchList.add(pitchNames.pitchName)
                 }
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                         baseContext, android.R.layout.simple_spinner_item, pitchList
@@ -145,7 +145,13 @@ class CreateEventActivity : AppCompatActivity() {
                 chosenDate.hours = timeSpinner?.selectedItem.toString().toInt()
                 chosenDate.minutes = 0
                 chosenDate.seconds = 0
-                DatabaseHelper.createEventInDB(EventModel(teamName.text.toString().trim(), Timestamp(chosenDate), descView.text.toString(), pitchSpinner?.getSelectedItem().toString(), Firebase.auth.currentUser!!.uid.toString(), ArrayList<String>(), Firebase.database.reference.child("events").push().key!!
+                DatabaseHelper.createEventInDB(EventModel(teamName.text.toString().trim(),
+                    Timestamp(chosenDate),
+                    descView.text.toString(),
+                    pitchSpinner?.getSelectedItem().toString(),
+                    Firebase.auth.currentUser!!.uid.toString(),
+                    participants,
+                    Firebase.database.reference.child("events").push().key!!
                 ))
                 startActivity(Intent(this, FragmentContainerActivity::class.java))
                 }

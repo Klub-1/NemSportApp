@@ -41,7 +41,7 @@ class SignupActivity : AppCompatActivity() {
         signupBtn.setOnClickListener{
             val username: String = usernameEt.text.toString()
             val phonenumber: String = phoneEt.text.toString()
-            val mail: String = mailEt.text.toString()
+            val mail: String = mailEt.text.toString().trim()
             val psw: String = pswEt.text.toString()
             if (checkforempty(username) && checkforempty(phonenumber) && checkforempty(mail) && checkforempty(psw)){
                 if (psw.length > 5) {
