@@ -12,7 +12,6 @@ import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.Adapter.ParticipantsEventAdapter
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.EventModel
-import dk.bkskjold.nemsport.Models.StringItem
 import dk.bkskjold.nemsport.R
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
