@@ -12,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.Adapter.ParticipantsEventAdapter
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.EventModel
+import dk.bkskjold.nemsport.Models.StringItem
 import dk.bkskjold.nemsport.R
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -42,6 +43,7 @@ class EventActivity : AppCompatActivity() {
         eventName.text = event.eventName
         eventDestination.text = event.pitches
         dateView.text = sdf.format(event.eventTime.toDate())
+
 
         //sets sign up button text to "afmeld" if user is already signed up for event or "tilmelding" if not
         if (event.participants.contains(currentUser)) {
@@ -133,7 +135,7 @@ class EventActivity : AppCompatActivity() {
             }
 
             // DatabaseHelper.updateParticapents(event)
-            
+
             // defines recyclerviews adapter
             participants.adapter = ParticipantsEventAdapter(participantsItemArray)
 

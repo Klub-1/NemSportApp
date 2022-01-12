@@ -1,7 +1,6 @@
 package dk.bkskjold.nemsport.UI
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,24 +26,19 @@ class HomeFragment : Fragment() {
     private lateinit var eventAdapter: TodayEventAdapter
     private var _binding: FragmentHomeBinding? = null
     private var _eventList : MutableList<EventModel> = mutableListOf()
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+        // Create Binding to bind view to this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // Setup recyclerview's adapter to use _eventList as data input
         val todayRecyclerView: RecyclerView = binding.todayRV
         eventAdapter = TodayEventAdapter(_eventList)
         todayRecyclerView.adapter = eventAdapter
@@ -82,13 +76,12 @@ class HomeFragment : Fragment() {
         calOnlyToday[Calendar.MINUTE] = 0
         calOnlyToday[Calendar.SECOND] = 0
         calOnlyToday[Calendar.MILLISECOND] = 0
-        val todayDateNoTime = calOnlyToday.time
-        calOnlyToday.add(Calendar.DATE, 1)
-        val tomorrowDateNoTime = calOnlyToday.time
+        val todayDateNoTime = calOnlyToday.time   // Save to get current date object
+        calOnlyToday.add(Calendar.DATE, 1) // Add a day to calender instance
+        val tomorrowDateNoTime = calOnlyToday.time // Save again to get tomorrow date object
 
 
         for (event in eventList) {
-            Log.w("DEBUGME:", event.toString())
             // Check if event time is today from 0:00 to 23:59
             if (event.eventTime.toDate() >= todayDateNoTime && event.eventTime.toDate() < tomorrowDateNoTime ) {
 
@@ -126,12 +119,19 @@ class HomeFragment : Fragment() {
 
         return newEventList
     }
-    
+
+    // Runs everytime fragment is loaded. Hence why we dont use onCreate
+    // Oncreate would cause it to run twice
     override fun onResume(){
         super.onResume()
-        _eventList.clear()
+
+        _eventList.clear() // Clear list to avoid doubles
+
+        // Start coroutine to get datebase information
         lifecycleScope.launch {
+            // Get all events
             _eventList.addAll( cleanEventDataInput(DatabaseHelper.getEventsFromDB()))
+            // update recyclerview
             eventAdapter.notifyDataSetChanged()
         }
     }

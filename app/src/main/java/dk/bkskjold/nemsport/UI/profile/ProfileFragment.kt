@@ -27,28 +27,25 @@ class ProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_profile, container, false)
-
         val profileNameTxt: TextView = view.findViewById(R.id.profileNameTxt)
         val profilePhoneTxt: TextView = view.findViewById(R.id.profilePhoneTxt)
         val profileMailTxt: TextView = view.findViewById(R.id.profileMailTxt)
-
         val changeProfileBtn: Button = view.findViewById(R.id.editProfileBtn)
         val logoutBtn: Button = view.findViewById(R.id.logoutBtn)
-
         val uid: String = Firebase.auth.currentUser?.uid ?: getString(R.string.unknown)
 
+        // Check if user id is found and get user data from firebase
         if (!uid.equals(getString(R.string.unknown))){
             lifecycleScope.launch {
+                // Gets information from Firestore and set fields with that info
                 user = DatabaseHelper.getUserFromDB(uid)!!
                 profileNameTxt.text = user!!.username
                 profilePhoneTxt.text = user!!.phonenumber
             }
-
             profileMailTxt.text = Firebase.auth.currentUser?.email ?: getString(R.string.unknown)
         }
 
-
-
+        // Go to edit profile page
         changeProfileBtn.setOnClickListener{
             val intent = Intent(view.context, EditProfileActivity::class.java)
             if (user != null){
@@ -58,14 +55,12 @@ class ProfileFragment : Fragment() {
                 startActivity(intent)
             }
         }
-
+        
+        // Logout of firebase and go to login page
         logoutBtn.setOnClickListener{
             Firebase.auth.signOut()
             startActivity(Intent(view.context, LoginActivity::class.java))
         }
-
         return view
     }
-
-
 }

@@ -139,6 +139,7 @@ class SearchFragment : Fragment() {
 
     private fun fabHandler(view: View) {
         menuFab.setOnClickListener {
+            // Hide and show floating action buttons
             if(FAB_IS_OPEN){
                 menuFab.setImageResource(R.drawable.ic_action_menu_light)
                 createFab.visibility = View.GONE

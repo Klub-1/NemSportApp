@@ -32,8 +32,10 @@ class EditEventAdapter(private val eventList: List<EventModel>) : RecyclerView.A
         val event:EventModel = eventList[position]
 
         holder.cardEvent.setOnClickListener {
-            val intent = Intent(holder.itemView.context, CreateEventActivity::class.java)
+            val intent = Intent(holder.itemView.context,CreateEventActivity::class.java)
+            // Tell CreateEventActivity to update the event
             intent.putExtra("update", true)
+            // Event to be updated
             intent.putExtra("event",event)
             holder.itemView.context.startActivity(intent)
         }
@@ -42,24 +44,12 @@ class EditEventAdapter(private val eventList: List<EventModel>) : RecyclerView.A
 
         // sets the text to the textview from our itemHolder class
         holder.timeView.text =  sdf.format(event.eventTime.toDate())
-
         holder.descView.text = event.eventDescription.toString()
-
         holder.titleView.text = event.eventName.toString()
 
+        // Remove imageview and textview, because user is the creator of the event
         holder.imageView.visibility = View.GONE
         holder.acceptView.visibility = View.GONE
-
-        /*if (event.participate){
-            holder.acceptView.visibility = View.VISIBLE
-            holder.imageView.setBackgroundResource(R.drawable.circle_imageview_green)
-            holder.imageView.setImageResource(R.drawable.ic_action_done_light)
-        }else{
-            holder.acceptView.visibility = View.GONE
-            holder.imageView.setBackgroundResource(R.drawable.circle_imageview_red)
-            holder.imageView.setImageResource(R.drawable.ic_action_user_light)
-        }*/
-
     }
 
     // return the number of the items in the list
@@ -75,9 +65,5 @@ class EditEventAdapter(private val eventList: List<EventModel>) : RecyclerView.A
         val acceptView: TextView = itemView.findViewById(R.id.eventAcceptedTxt)
         val imageView: ImageView = itemView.findViewById(R.id.acceptedIv)
         val cardEvent: CardView = itemView.findViewById(R.id.eventCard)
-
-
     }
-
-
 }
