@@ -6,7 +6,7 @@ Der kan laves en ny konto, hvis man ikke har en i forvejen:
    - Navn
    - Telefonnummer
    - Email
-   - Password
+   - Password (Minimum 6 tegn)
  - Tryk på Sign Up
 
 ## Beskrivelse
