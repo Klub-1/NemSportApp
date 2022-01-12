@@ -20,6 +20,7 @@ import dk.bkskjold.nemsport.Helper.OnSwipeTouchListener
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 import dk.bkskjold.nemsport.UI.edit_event.EventAdministrationActivity
+import dk.bkskjold.nemsport.UI.event.CreateEventActivity
 import dk.bkskjold.nemsport.databinding.FragmentCalendarBinding
 import kotlinx.coroutines.launch
 import java.util.*
@@ -83,14 +84,14 @@ class SearchFragment : Fragment() {
         eventRecyclerView.adapter = eventAdapter
         eventRecyclerView.layoutManager = LinearLayoutManager(activity, OrientationHelper.VERTICAL, false)
 
-
+        //gets all the events on the current day and puts them in the recyclerview
         lifecycleScope.launch {
             _eventList += DatabaseHelper.getEventsByDateFromDB(Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),0,0)
                 ,Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),23,59))
             eventAdapter.notifyDataSetChanged()
         }
 
-
+        //when a date is clicked on the calendar, the events on that day are shown
         calendarViewSearch.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
             _eventList = mutableListOf()
             eventAdapter = CalendarEventAdapter(_eventList)
@@ -99,8 +100,6 @@ class SearchFragment : Fragment() {
                 _eventList += DatabaseHelper.getEventsByDateFromDB(Date(year-1900,month,dayOfMonth,0,0),(Date(year-1900,month,dayOfMonth,23,59)))
                 eventAdapter.notifyDataSetChanged()
             }
-
-
         }
         fabHandler(root)
         hideCalendar(root)
@@ -164,6 +163,7 @@ class SearchFragment : Fragment() {
     }
     override fun onResume(){
         super.onResume()
+        //wheen the fragment is resumed, the events on the current day are updated
         _eventList.clear()
         lifecycleScope.launch {
             _eventList.addAll( DatabaseHelper.getEventsByDateFromDB(Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),0,0)

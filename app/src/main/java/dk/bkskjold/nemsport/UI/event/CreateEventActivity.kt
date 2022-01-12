@@ -1,10 +1,9 @@
-package dk.bkskjold.nemsport.UI
+package dk.bkskjold.nemsport.UI.event
 
 import android.app.DatePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.lifecycle.lifecycleScope
@@ -16,10 +15,8 @@ import dk.bkskjold.nemsport.FragmentContainerActivity
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.Models.PitchModel
-import dk.bkskjold.nemsport.Models.UserModel
 import dk.bkskjold.nemsport.R
 import kotlinx.coroutines.launch
-import java.sql.Time
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -69,47 +66,39 @@ class CreateEventActivity : AppCompatActivity() {
 
             var event: EventModel = intent.extras?.get("event") as EventModel
             if (event != null) {
-
+                
+                // Gets all pitches from database and crreates a spinner with them
                 lifecycleScope.launch {
                     pitches = DatabaseHelper.getPitchesFromDB()
                     for (pitchNames in pitches) {
                         pitchList.add(pitchNames.pitchNames)
                     }
-                    val apapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                    val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                             baseContext, android.R.layout.simple_spinner_item, pitchList
                     )
-                    pitchSpinner?.adapter = apapter
+                    pitchSpinner?.adapter = adapter
                 }
 
+                //gets all events on the selected date and removes the times that are already taken from the time spinner 
                 lifecycleScope.launch {
-                    val chosenDateStart = Date(chosenDate.year, chosenDate.month, chosenDate.date, 0, 0, 0)
-                    val chosenDateEnd = Date(chosenDate.year, chosenDate.month, chosenDate.date, 24, 0, 0)
-                    timeToPick = arrayListOf()
-                    for (i in 7..22) {
-                        timeToPick.add(i.toString())
-                    }
+                    
+                    createTimeSpinner()
 
-                    val eventsOnDay = DatabaseHelper.getEventsByDateFromDB(chosenDateStart, chosenDateEnd)
-                    for (eventOnDay in eventsOnDay) {
-                        if (eventOnDay.pitches == pitchSpinner?.selectedItem.toString()) {
-
-                            timeToPick.remove(eventOnDay.eventTime.toDate().hours.toString())
-
-                        }
-                    }
                     val hour = event.eventTime.toDate().hours.toString()
                     if (timeToPick.contains(hour)) {
                         timeToPick.remove(hour)
                     }
                     timeToPick.add(0, hour)
-                    val apapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                    val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                             baseContext, android.R.layout.simple_spinner_item, timeToPick
                     )
-                    timeSpinner?.adapter = apapter
+                    timeSpinner?.adapter = adapter
 
 
                 }
 
+
+                
                 deleteBtn.setOnClickListener {
                     DatabaseHelper.deleteEventInDB(event)
                             .addOnSuccessListener { startActivity(Intent(this, FragmentContainerActivity::class.java)) }
@@ -124,37 +113,55 @@ class CreateEventActivity : AppCompatActivity() {
         } else {
             //teamsSpinner.getSelectedItem().toString()
             deleteBtn.visibility = View.GONE
-
+            
+            // Gets all pitches from database and crreates a spinner with them
             lifecycleScope.launch {
                 pitches = DatabaseHelper.getPitchesFromDB()
                 for (pitchNames in pitches) {
                     pitchList.add(pitchNames.pitchNames)
                 }
-                val apapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                         baseContext, android.R.layout.simple_spinner_item, pitchList
                 )
-                pitchSpinner?.adapter = apapter
+                pitchSpinner?.adapter = adapter
             }
 
-            createTimeSpinner()
+            lifecycleScope.launch {
+                createTimeSpinner()
+                val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                                baseContext, android.R.layout.simple_spinner_item, timeToPick
+                        )
+                timeSpinner?.adapter = adapter
+            }
 
+            //creates a event in the database
             createEvent.setOnClickListener {
+                val currentDate = Date(now.get(Calendar.YEAR)-1900, now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH), 0, 0, 0)
+                // makes sure the chosen date is not before todays date, and makes sure that the event has a name
+                if(!(teamName.text.toString().trim().length == 0) && chosenDate.after(currentDate) ){
+                val participants = ArrayList<String>()
+                participants.add(Firebase.auth.currentUser!!.uid.toString())
+                
                 chosenDate.hours = timeSpinner?.selectedItem.toString().toInt()
                 chosenDate.minutes = 0
                 chosenDate.seconds = 0
-                DatabaseHelper.createEventInDB(EventModel(teamName.text.toString(), Timestamp(chosenDate), descView.text.toString(), pitchSpinner?.getSelectedItem().toString(), Firebase.auth.currentUser!!.uid.toString(), ArrayList<String>(), Firebase.database.reference.child("events").push().key!!
+                DatabaseHelper.createEventInDB(EventModel(teamName.text.toString().trim(), Timestamp(chosenDate), descView.text.toString(), pitchSpinner?.getSelectedItem().toString(), Firebase.auth.currentUser!!.uid.toString(), ArrayList<String>(), Firebase.database.reference.child("events").push().key!!
                 ))
                 startActivity(Intent(this, FragmentContainerActivity::class.java))
+                }
             }
         }
 
         picktime.setOnClickListener {
             // https://www.youtube.com/watch?v=gollUUFBKQA&ab_channel=CodeAndroid
 
+            //creates a date picker dialog and sets the date to the chosen date
             val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 chosenDate = Date(year - 1900, month, dayOfMonth, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), now.get(Calendar.SECOND))
                 showDateTXT.text = sdf.format(chosenDate) //dayOfMonth.toString() + "-" + (month + 1).toString() + "-" + year.toString()
-                createTimeSpinner()
+                lifecycleScope.launch {
+                    createTimeSpinner()
+                }
             }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DATE))
 
             datePicker.show()
@@ -181,24 +188,27 @@ class CreateEventActivity : AppCompatActivity() {
         showDateTXT.text = sdf.format(eventTime)
 
         createEvent.setOnClickListener {
-            chosenDate.hours = timeSpinner.selectedItem.toString().toInt()
-            chosenDate.minutes = 0
-            chosenDate.seconds = 0
-            event.eventName = teamName.text.toString()
-            event.eventDescription = descView.text.toString()
-            event.pitches = pitchSpinner.selectedItem.toString()
-            event.eventTime = Timestamp(chosenDate)
-
-            DatabaseHelper.updateEventInDB(event)
-                    .addOnSuccessListener { startActivity(Intent(this, FragmentContainerActivity::class.java)) }
+            val currentDate = Date(now.get(Calendar.YEAR)-1900, now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH), 0, 0, 0)
+            // makes sure the chosen date is not before todays date, and makes sure that the event has a name
+            if(!(teamName.text.toString().trim().length == 0) && chosenDate.after(currentDate) ){
+                chosenDate.hours = timeSpinner.selectedItem.toString().toInt()
+                chosenDate.minutes = 0
+                chosenDate.seconds = 0
+                event.eventName = teamName.text.toString().trim()
+                event.eventDescription = descView.text.toString()
+                event.pitches = pitchSpinner.selectedItem.toString()
+                event.eventTime = Timestamp(chosenDate)
+                        DatabaseHelper.updateEventInDB(event)
+                        .addOnSuccessListener { startActivity(Intent(this, FragmentContainerActivity::class.java)) }
                     .addOnFailureListener { Toast.makeText(this, getString(R.string.update_fail), Toast.LENGTH_LONG).show() }
-
+            }
         }
     }
+    /*
+    creates a spinner that shows the available hours for a event
+    */
+    suspend fun createTimeSpinner() {
 
-    fun createTimeSpinner() {
-
-        lifecycleScope.launch {
             val chosenDateStart = Date(chosenDate.year, chosenDate.month, chosenDate.date, 0, 0, 0)
             val chosenDateEnd = Date(chosenDate.year, chosenDate.month, chosenDate.date, 24, 0, 0)
             timeToPick = arrayListOf()
@@ -212,11 +222,7 @@ class CreateEventActivity : AppCompatActivity() {
                     timeToPick.remove(eventOnDay.eventTime.toDate().hours.toString())
                 }
             }
-            val apapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                    baseContext, android.R.layout.simple_spinner_item, timeToPick
-            )
-            timeSpinner?.adapter = apapter
-        }
+            
     }
 
 }

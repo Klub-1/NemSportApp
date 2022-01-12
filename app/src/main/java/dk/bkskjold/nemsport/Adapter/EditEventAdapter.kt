@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
-import dk.bkskjold.nemsport.UI.CreateEventActivity
+import dk.bkskjold.nemsport.UI.event.CreateEventActivity
 import java.text.SimpleDateFormat
 
 class EditEventAdapter(private val eventList: List<EventModel>) : RecyclerView.Adapter<EditEventAdapter.ViewHolder>() {
@@ -32,7 +32,7 @@ class EditEventAdapter(private val eventList: List<EventModel>) : RecyclerView.A
         val event:EventModel = eventList[position]
 
         holder.cardEvent.setOnClickListener {
-            val intent = Intent(holder.itemView.context,CreateEventActivity::class.java)
+            val intent = Intent(holder.itemView.context, CreateEventActivity::class.java)
             intent.putExtra("update", true)
             intent.putExtra("event",event)
             holder.itemView.context.startActivity(intent)

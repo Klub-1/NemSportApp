@@ -1,16 +1,11 @@
 package dk.bkskjold.nemsport.Adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import dk.bkskjold.nemsport.Models.EventModel
-import dk.bkskjold.nemsport.Models.StringItem
 import dk.bkskjold.nemsport.R
-import dk.bkskjold.nemsport.UI.EventActivity
-import java.text.SimpleDateFormat
 
 class ParticipantsEventAdapter(private val _participants: List<String>) : RecyclerView.Adapter<ParticipantsEventAdapter.ViewHolder>() {
 
@@ -29,16 +24,12 @@ class ParticipantsEventAdapter(private val _participants: List<String>) : Recycl
 
         val participant = _participants[position]
 
-
-
         // sets the text to the textview from our itemHolder class
-
-
         holder.participantsView.text = participant.toString()
     }
 
 
-
+    // Returns the number of participants
     override fun getItemCount(): Int {
             return _participants.size
 

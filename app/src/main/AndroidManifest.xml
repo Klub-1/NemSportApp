@@ -32,10 +32,10 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.EventActivity"
+            android:name=".UI.event.EventActivity"
             android:exported="false" />
         <activity
-            android:name=".UI.CreateEventActivity"
+            android:name=".UI.event.CreateEventActivity"
             android:exported="true"
             android:label="@string/title_activity_create_event"
             android:parentActivityName=".FragmentContainerActivity"
