@@ -17,14 +17,17 @@ import dk.bkskjold.nemsport.Models.UserModel
 import kotlinx.coroutines.tasks.await
 import java.util.*
 
-
+// Kotlin Singleton creation
 object DatabaseHelper {
 
     @SuppressLint("StaticFieldLeak")
     var db: FirebaseFirestore = Firebase.firestore
 
-
+    /**
+    * @param event Event to be created
+    */
     fun createEventInDB(event: EventModel) {
+        // Create event
         db.collection("events").document(event.id).set(event).addOnSuccessListener { documentReference ->
             Log.d("DBHelper", "DocumentSnapshot added with ID:")
         }
@@ -47,14 +50,16 @@ object DatabaseHelper {
 
     }
 
+    // Gets all events in database. 
     suspend fun getEventsFromDB( ): MutableList<EventModel> {
-
+        
         val snapshot = db
-            .collection("events")
-            .get()
-            .await()
+            .collection("events") // Select collection called events
+            .get()  // Fetch contents
+            .await()  // Hold thread execution until fetched
 
-        return snapshot.toObjects(EventModel::class.java)
+        // Map all events in snapshot to our EventModel class
+        return snapshot.toObjects(EventModel::class.java) 
     }
 
     suspend fun getPitchesFromDB( ): MutableList<PitchModel> {
@@ -80,18 +85,21 @@ object DatabaseHelper {
         return snapshot.toObject(UserModel::class.java)
     }
 
+    // Takes a user as parameter and updates that user in the Firestore database 
     fun updateUserInDB(UID: String, user: UserModel): Task<Void> {
         val userRef = db.collection("users").document(UID)
 
-        return userRef.set(user)
+        return userRef.set(user) // update command for Firestore
     }
 
+    // Takes an event as parameter and updates that event in the Firestore database
     fun updateEventInDB(event: EventModel): Task<Void> {
         val docRef = db.collection("events").document(event.id)
 
-        return docRef.set(event)
+        return docRef.set(event) // Update command for Firestore
     }
     
+    // Deletes an event in Firestore database
     fun deleteEventInDB(event: EventModel): Task<Void> {
         val docRef = db.collection("events").document(event.id)        
         return docRef.delete()
@@ -110,8 +118,12 @@ object DatabaseHelper {
         return snapshot.toObjects(EventModel::class.java)
     }
 
+    /**
+    * @param uid UserID
+    */
     suspend fun getEventsCreatedByUserFromDB(uid: String): MutableList<EventModel> {
 
+        // Get events where eventCreatorUID = uid order by eventTime
         val snapshot = db
             .collection("events")
             .whereEqualTo("eventCreaterUID", uid)
@@ -121,8 +133,7 @@ object DatabaseHelper {
 
         return snapshot.toObjects(EventModel::class.java)
     }
-
-
+    
     suspend fun updateParticapents(event: EventModel){
         val snapshot = db
             .collection("events")
@@ -132,12 +143,4 @@ object DatabaseHelper {
 
 
     }
-
-
-    /*fun updateEventAttendanceInDB(userID:String, attending:Boolean, event:EventModel){
-        var query = firebase.firestore().collection("events")
-        query = query.where(id, "==", event.id)
-        event.attending.userID.attending
-    }*/
-
 }

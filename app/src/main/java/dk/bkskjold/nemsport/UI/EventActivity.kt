@@ -45,13 +45,6 @@ class EventActivity : AppCompatActivity() {
         dateView.text = sdf.format(event.eventTime.toDate())
 
 
-
-
-
-
-
-
-
         if (event.participants.contains(currentUser)) {
             signUpBtn.text = "afmeld"
             true
