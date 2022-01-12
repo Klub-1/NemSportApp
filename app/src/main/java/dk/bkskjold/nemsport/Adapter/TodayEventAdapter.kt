@@ -87,7 +87,6 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
         // If it matches it is a divider
         return when (element.pitches) {
             "TopSecret" -> R.layout.event_item_divider // Only TopSecret will be displayed as a title
-            // TODO: Fix this hack
             else -> R.layout.all_event_item // All others
         }
     }
