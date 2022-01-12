@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.SignInMethodQueryResult
 import com.google.firebase.auth.ktx.auth
@@ -42,7 +43,13 @@ class SignupActivity : AppCompatActivity() {
             val phonenumber: String = phoneEt.text.toString()
             val mail: String = mailEt.text.toString()
             val psw: String = pswEt.text.toString()
-            if (checkforempty(username) && checkforempty(phonenumber) && checkforempty(mail) && checkforempty(psw)){ signup(username, phonenumber, mail, psw) } // If no field is empty, calls sign up method with entered information
+            if (checkforempty(username) && checkforempty(phonenumber) && checkforempty(mail) && checkforempty(psw)){
+                if (psw.length > 5) {
+                    signup(username, phonenumber, mail, psw)
+                } else {
+                    Toast.makeText(this, getString(R.string.invalid_password), Toast.LENGTH_LONG).show()
+                }
+            } // If no field is empty, calls sign up method with entered information
         }
 
         // Sends user back to login screen
