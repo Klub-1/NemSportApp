@@ -40,7 +40,7 @@ class EditEventAdapter(private val eventList: List<EventModel>) : RecyclerView.A
             holder.itemView.context.startActivity(intent)
         }
 
-        val sdf = SimpleDateFormat("dd-MM-yyyy - HH:mm:ss")
+        val sdf = SimpleDateFormat("dd-MM-yyyy - HH:mm")
 
         // sets the text to the textview from our itemHolder class
         holder.timeView.text =  sdf.format(event.eventTime.toDate())
