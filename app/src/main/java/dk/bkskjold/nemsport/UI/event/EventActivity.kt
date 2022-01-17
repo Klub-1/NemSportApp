@@ -10,6 +10,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.Adapter.ParticipantsEventAdapter
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
+import dk.bkskjold.nemsport.Helper.DatabaseHelper.getUserUIDFromDB
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 import kotlinx.coroutines.launch
@@ -34,7 +35,7 @@ class EventActivity : AppCompatActivity() {
         val sdf = SimpleDateFormat("EEE, d MMM yyyy HH:mm")
         val signUpBtn = findViewById<Button>(R.id.signUpBtn)
 
-        val currentUser = Firebase.auth.currentUser!!.uid
+        val currentUser = getUserUIDFromDB()!!
 
 
         eventDesc.text = event.eventDescription

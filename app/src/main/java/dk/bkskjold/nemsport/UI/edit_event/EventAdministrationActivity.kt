@@ -41,7 +41,7 @@ class EventAdministrationActivity : AppCompatActivity() {
         }
 
         // Get user ID - if null return UNKNOWN
-        val uid: String = Firebase.auth.currentUser?.uid ?: getString(R.string.unknown)
+        val uid: String = DatabaseHelper.getUserUIDFromDB() ?: getString(R.string.unknown)
 
         // Check if uid is not null
         if (uid != getString(R.string.unknown)) {

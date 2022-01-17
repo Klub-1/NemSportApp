@@ -44,7 +44,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         // Get user data from intent (ProfileFragment.kt)
         user = intent.extras!!.get("user") as UserModel
-        uid = intent.extras!!.getString("uid", Firebase.auth.currentUser?.uid ?: getString(R.string.unknown))
+        uid = intent.extras!!.getString("uid", DatabaseHelper.getUserUIDFromDB() ?: getString(R.string.unknown))
         mail = intent.extras!!.get("mail") as String
 
         editProfilePhoneET = findViewById(R.id.editProfilePhoneEt)

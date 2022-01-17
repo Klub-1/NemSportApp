@@ -19,6 +19,7 @@ import com.google.firebase.auth.ktx.auth
 import dk.bkskjold.nemsport.R
 import java.util.*
 import com.google.firebase.ktx.Firebase
+import dk.bkskjold.nemsport.Helper.DatabaseHelper.getUserUIDFromDB
 
 
 class HomeFragment : Fragment() {
@@ -87,7 +88,7 @@ class HomeFragment : Fragment() {
 
 
                 // Add event to list if user is signed up
-                if(event.participants.contains(Firebase.auth.uid)) {
+                if(event.participants.contains(getUserUIDFromDB())) {
                     // Add divider if it is today and we havent seen the divider before
                     if (!todayDivider) {
                         newEventList.add(EventModel(eventName = todayString, pitches = "TopSecret"))
@@ -100,7 +101,7 @@ class HomeFragment : Fragment() {
             } else if (event.eventTime.toDate()  > tomorrowDateNoTime) {
 
                 // Add event to list if user is signed up
-                if(event.participants.contains(Firebase.auth.uid)) {
+                if(event.participants.contains(getUserUIDFromDB())) {
                     // Add divider if it is today and we havent seen the divider before
                     if (!upcomingDivider) {
                         newEventList.add(EventModel(eventName = upcomingString, pitches = "TopSecret"))

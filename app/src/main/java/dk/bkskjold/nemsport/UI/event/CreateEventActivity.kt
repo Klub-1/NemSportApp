@@ -13,6 +13,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dk.bkskjold.nemsport.FragmentContainerActivity
 import dk.bkskjold.nemsport.Helper.DatabaseHelper
+import dk.bkskjold.nemsport.Helper.DatabaseHelper.getUserUIDFromDB
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.Models.PitchModel
 import dk.bkskjold.nemsport.R
@@ -140,7 +141,7 @@ class CreateEventActivity : AppCompatActivity() {
                 // makes sure the chosen date is not before todays date, and makes sure that the event has a name
                 if(!(teamName.text.toString().trim().length == 0) && chosenDate.after(currentDate) ){
                 val participants = ArrayList<String>()
-                participants.add(Firebase.auth.currentUser!!.uid.toString())
+                participants.add(getUserUIDFromDB().toString())
                 
                 chosenDate.hours = timeSpinner?.selectedItem.toString().toInt()
                 chosenDate.minutes = 0

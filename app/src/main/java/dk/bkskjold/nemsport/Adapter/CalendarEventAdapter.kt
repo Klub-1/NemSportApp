@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dk.bkskjold.nemsport.Helper.DatabaseHelper.getUserUIDFromDB
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 import dk.bkskjold.nemsport.UI.event.EventActivity
@@ -48,7 +49,7 @@ class CalendarEventAdapter(private val eventList: List<EventModel>) : RecyclerVi
         holder.titleView.text = event.eventName.toString()
 
         // Checks if the logged in user is set as a participant in the event
-        if (event.participants.contains(Firebase.auth.uid)){
+        if (event.participants.contains(getUserUIDFromDB())){
             //makes sure the event is visible in the recyclerview
             holder.acceptView.visibility = View.VISIBLE 
             // sets image to 'participating' image

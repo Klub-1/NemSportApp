@@ -32,7 +32,7 @@ class ProfileFragment : Fragment() {
         val profileMailTxt: TextView = view.findViewById(R.id.profileMailTxt)
         val changeProfileBtn: Button = view.findViewById(R.id.editProfileBtn)
         val logoutBtn: Button = view.findViewById(R.id.logoutBtn)
-        val uid: String = Firebase.auth.currentUser?.uid ?: getString(R.string.unknown)
+        val uid: String = DatabaseHelper.getUserUIDFromDB() ?: getString(R.string.unknown)
 
         // Check if user id is found and get user data from firebase
         if (!uid.equals(getString(R.string.unknown))){
