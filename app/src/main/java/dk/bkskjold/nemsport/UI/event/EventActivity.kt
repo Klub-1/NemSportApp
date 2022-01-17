@@ -31,7 +31,7 @@ class EventActivity : AppCompatActivity() {
         val eventDestination = findViewById<TextView>(R.id.locationTxt)
         val participants: RecyclerView = findViewById(R.id.userRecyclerView)
         val dateView = findViewById<TextView>(R.id.dateTxt)
-        val sdf = SimpleDateFormat("EEE, d MMM yyyy HH:mm")
+        val sdf = SimpleDateFormat("dd-MM-yyyy - HH:mm")
         val signUpBtn = findViewById<Button>(R.id.signUpBtn)
 
         val currentUser = Firebase.auth.currentUser!!.uid

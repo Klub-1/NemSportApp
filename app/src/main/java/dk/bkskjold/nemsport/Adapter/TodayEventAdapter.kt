@@ -56,7 +56,7 @@ class TodayEventAdapter(private val eventList: List<EventModel>) : RecyclerView.
                 // bind NameViewHolder
                 val event = eventList[position]
 
-                val sdf = SimpleDateFormat("dd-MM-yyyy - HH:mm:ss")
+                val sdf = SimpleDateFormat("dd-MM-yyyy - HH:mm")
 
                 // sets the text to the text
                 holder.timeView.text = sdf.format(event.eventTime.toDate())
