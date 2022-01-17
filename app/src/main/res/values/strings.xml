@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NemSport</string>
+    <string name="app_name">C2-NemSport</string>
     <string name="login">Log Ind</string>
     <string name="register">Tilmeld</string>
     <string name="username">Brugernavn</string>
