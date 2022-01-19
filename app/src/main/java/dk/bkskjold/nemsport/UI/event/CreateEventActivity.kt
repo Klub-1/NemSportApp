@@ -80,6 +80,8 @@ class CreateEventActivity : AppCompatActivity() {
                     pitchSpinner?.adapter = adapter
                 }
 
+                chosenDate = event.eventTime.toDate()
+
                 //gets all events on the selected date and removes the times that are already taken from the time spinner 
                 lifecycleScope.launch {
                     
@@ -91,7 +93,7 @@ class CreateEventActivity : AppCompatActivity() {
                     }
                     timeToPick.add(0, hour)
                     val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-                            baseContext, android.R.layout.simple_spinner_item, timeToPick
+                        baseContext, android.R.layout.simple_spinner_item, timeToPick
                     )
                     timeSpinner?.adapter = adapter
 
@@ -168,6 +170,10 @@ class CreateEventActivity : AppCompatActivity() {
                 showDateTXT.text = sdf.format(chosenDate) //dayOfMonth.toString() + "-" + (month + 1).toString() + "-" + year.toString()
                 lifecycleScope.launch {
                     createTimeSpinner()
+                    val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                        baseContext, android.R.layout.simple_spinner_item, timeToPick
+                    )
+                    timeSpinner?.adapter = adapter
                 }
             }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DATE))
 
@@ -189,7 +195,6 @@ class CreateEventActivity : AppCompatActivity() {
         descView.setText(event.eventDescription)
         pitchSpinner.setSelection(pitchList.indexOf(event.pitches))
 
-        chosenDate = event.eventTime.toDate()
 
         val eventTime = event.eventTime.toDate()
         showDateTXT.text = sdf.format(eventTime)
@@ -222,14 +227,15 @@ class CreateEventActivity : AppCompatActivity() {
             for (i in 7..22) {
                 timeToPick.add(i.toString())
             }
-
             val eventsOnDay = DatabaseHelper.getEventsByDateFromDB(chosenDateStart, chosenDateEnd)
-            for (eventOnDay in eventsOnDay) {
-                if (eventOnDay.pitches == pitchSpinner?.selectedItem.toString()) {
-                    timeToPick.remove(eventOnDay.eventTime.toDate().hours.toString())
+            if (pitchSpinner.selectedItem != null) {
+                for (eventOnDay in eventsOnDay) {
+                    if (eventOnDay.pitches == pitchSpinner?.selectedItem.toString()) {
+                        timeToPick.remove(eventOnDay.eventTime.toDate().hours.toString())
+                    }
                 }
             }
-            
-    }
+
+        }
 
 }
