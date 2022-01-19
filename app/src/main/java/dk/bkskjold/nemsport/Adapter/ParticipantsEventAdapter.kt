@@ -5,16 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
 
-class TomorrowEventAdapter(private val eventList: List<EventModel>) : RecyclerView.Adapter<TomorrowEventAdapter.ViewHolder>() {
+class ParticipantsEventAdapter(private val _participants: List<String>) : RecyclerView.Adapter<ParticipantsEventAdapter.ViewHolder>() {
+
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
         // that is used to hold list item
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.event_item, parent, false)
+            .inflate(R.layout.participant_item, parent, false)
 
         return ViewHolder(view)
     }
@@ -22,24 +22,23 @@ class TomorrowEventAdapter(private val eventList: List<EventModel>) : RecyclerVi
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val event = eventList[position]
+        val participant = _participants[position]
 
         // sets the text to the textview from our itemHolder class
-        holder.timeView.text = event.time
-
-        holder.titleView.text = event.title
-
+        holder.participantsView.text = participant.toString()
     }
 
-    // return the number of the items in the list
+
+    // Returns the number of participants
     override fun getItemCount(): Int {
-        return eventList.size
+            return _participants.size
+
     }
 
-    // Holds the views for adding it to image and text
+
+    // Holds the views for participant textView
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val timeView: TextView = itemView.findViewById(R.id.eventTimeTxt)
-        val titleView: TextView = itemView.findViewById(R.id.eventTitleTxt)
-    }
+        val participantsView: TextView = itemView.findViewById(R.id.participantTextView)
 
+    }
 }

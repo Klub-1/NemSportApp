@@ -16,7 +16,7 @@
         tools:layout="@layout/fragment_calendar" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="dk.bkskjold.nemsport.UI.ProfileFragment"
+        android:name="dk.bkskjold.nemsport.UI.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

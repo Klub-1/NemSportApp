@@ -7,14 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
-import androidx.cardview.widget.CardView
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dk.bkskjold.nemsport.Adapter.CalendarEventAdapter
+import dk.bkskjold.nemsport.Helper.DatabaseHelper
+import dk.bkskjold.nemsport.Helper.OnSwipeTouchListener
 import dk.bkskjold.nemsport.Models.EventModel
 import dk.bkskjold.nemsport.R
-import java.util.ArrayList
+import dk.bkskjold.nemsport.UI.edit_event.EventAdministrationActivity
+import dk.bkskjold.nemsport.UI.event.CreateEventActivity
+import dk.bkskjold.nemsport.databinding.FragmentCalendarBinding
+import kotlinx.coroutines.launch
+import java.util.*
 
 class SearchFragment : Fragment() {
 
@@ -22,7 +31,6 @@ class SearchFragment : Fragment() {
     SETTINGS VAR AND VAL
      */
     private var FAB_IS_OPEN: Boolean = false
-
 
     /*
     VIEWS
@@ -32,54 +40,115 @@ class SearchFragment : Fragment() {
     private lateinit var menuFab: FloatingActionButton
     private lateinit var createFab: FloatingActionButton
     private lateinit var filterFab: FloatingActionButton
+    private lateinit var editEventFab: FloatingActionButton
 
     private lateinit var calendarViewSearch: CalendarView
-    private lateinit var calendarToggleCV: CardView
+    private lateinit var calendarToggleFL: FrameLayout
+
+    private  lateinit var topViewLL: LinearLayout
+
+    val now = Calendar.getInstance()
+
+    var model = arrayListOf<EventModel>()
 
     /*
     RECYCLERVIEW
      */
     private lateinit var adapter: CalendarEventAdapter
     private var eventList: ArrayList<EventModel> = ArrayList<EventModel>()
+    var query = DatabaseHelper.db.collection("events")
 
 
+    private lateinit var eventAdapter: CalendarEventAdapter
+    private var _binding: FragmentCalendarBinding? = null
+    private var _eventList : MutableList<EventModel> = mutableListOf()
+
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_calendar, container, false)
 
-        initViews(view)
-        createCalenderEvent(view)
-        fabHandler(view)
+        _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        val root: View = binding.root
 
+        initViews(root)
+        
+        val eventRecyclerView: RecyclerView = binding.calendarRV
+        eventAdapter = CalendarEventAdapter(_eventList)
+        eventRecyclerView.adapter = eventAdapter
+        eventRecyclerView.layoutManager = LinearLayoutManager(activity, OrientationHelper.VERTICAL, false)
+
+        //gets all the events on the current day and puts them in the recyclerview
+        lifecycleScope.launch {
+            _eventList += DatabaseHelper.getEventsByDateFromDB(Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),0,0)
+                ,Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),23,59))
+            eventAdapter.notifyDataSetChanged()
+        }
+
+        //when a date is clicked on the calendar, the events on that day are shown
+        calendarViewSearch.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+            _eventList = mutableListOf()
+            eventAdapter = CalendarEventAdapter(_eventList)
+            eventRecyclerView.adapter = eventAdapter
+            lifecycleScope.launch {
+                _eventList += DatabaseHelper.getEventsByDateFromDB(Date(year-1900,month,dayOfMonth,0,0),(Date(year-1900,month,dayOfMonth,23,59)))
+                eventAdapter.notifyDataSetChanged()
+            }
+        }
+        fabHandler(root)
+        hideCalendar(root)
+        initViews(root)
         // Inflate the layout for this fragment
-        return view
+        return root
     }
 
     private fun initViews(view: View) {
         calendarViewSearch = view.findViewById(R.id.calendarViewSearch)
-        calendarToggleCV = view.findViewById(R.id.calendarToggleCV)
+        calendarToggleFL = view.findViewById(R.id.calendarToggleFL)
+        topViewLL = view.findViewById(R.id.topViewLL)
 
         menuFab = view.findViewById(R.id.menuFab)
         createFab = view.findViewById(R.id.createFab)
-        filterFab = view.findViewById(R.id.filterFab)
+        editEventFab = view.findViewById(R.id.editEventFab)
 
+    }
+
+    private fun hideCalendar(view: View) {
+        /*
+        * TouchListener is based on
+        * https://www.tutorialspoint.com/how-to-handle-swipe-gestures-in-kotlin
+        */
+        calendarToggleFL.setOnTouchListener(object : OnSwipeTouchListener(view.context) {
+            override fun onSwipeUp() {
+                super.onSwipeUp()
+                calendarViewSearch.visibility = View.GONE
+            }
+
+            override fun onSwipeDown() {
+                super.onSwipeDown()
+                calendarViewSearch.visibility = View.VISIBLE
+            }
+        })
     }
 
     private fun fabHandler(view: View) {
         menuFab.setOnClickListener {
+            // Hide and show floating action buttons
             if(FAB_IS_OPEN){
                 menuFab.setImageResource(R.drawable.ic_action_menu_light)
                 createFab.visibility = View.GONE
-                filterFab.visibility = View.GONE
+                editEventFab.visibility = View.GONE
                 FAB_IS_OPEN = false
             }else{
                 menuFab.setImageResource(R.drawable.ic_action_close_light)
                 createFab.visibility = View.VISIBLE
-                filterFab.visibility = View.VISIBLE
+                editEventFab.visibility = View.VISIBLE
                 FAB_IS_OPEN = true
             }
         }
@@ -87,23 +156,20 @@ class SearchFragment : Fragment() {
         createFab.setOnClickListener{
             startActivity(Intent(view.context, CreateEventActivity::class.java))
         }
+        
+        editEventFab.setOnClickListener{
+            startActivity(Intent(view.context, EventAdministrationActivity::class.java))
+        }
+        
     }
-
-    private fun createCalenderEvent(view: View){
-
-        eventRecyclerView = view.findViewById(R.id.calendarRV)
-
-        eventRecyclerView.layoutManager = LinearLayoutManager(view.context)
-
-        eventList.add(EventModel("8:00 - 10:00", "Husk fodbold", "Fodboldgolf", false))
-        eventList.add(EventModel("12:00 - 13:30", "Afholdes i kantinen", "Bestyrelsesmøde", true))
-        eventList.add(EventModel("14:00 - 15:30", "Lokale 101", "Generélforsamling", false))
-        eventList.add(EventModel("20:00 - 21:30", "Træneren holder fri", "Fodboldtræning", true))
-
-        adapter = CalendarEventAdapter(eventList)
-
-        eventRecyclerView.adapter = adapter
-    }
-
-
+    override fun onResume(){
+        super.onResume()
+        //wheen the fragment is resumed, the events on the current day are updated
+        _eventList.clear()
+        lifecycleScope.launch {
+            _eventList.addAll( DatabaseHelper.getEventsByDateFromDB(Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),0,0)
+                    ,Date(now.get(Calendar.YEAR)-1900,now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH),23,59)))
+            eventAdapter.notifyDataSetChanged()
+        }
+        }
 }

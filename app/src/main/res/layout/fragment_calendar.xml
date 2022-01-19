@@ -24,16 +24,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:visibility="visible"
                 android:minDate="01/01/2021"
                 android:theme="@style/CalenderViewCustom"
                 android:dateTextAppearance="@style/CalenderViewDateCustomText"
                 android:weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/calendarToggleCV"
-                android:layout_width="50dp"
-                android:layout_height="5dp"
-                android:layout_marginBottom="10dp"/>
+            <FrameLayout
+                android:id="@+id/calendarToggleFL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="50dp"
+                    android:layout_height="5dp" />
+            </FrameLayout>
 
         </LinearLayout>
 
@@ -54,6 +59,7 @@
         android:layout_alignParentEnd="true"
         app:backgroundTint="@color/bk_gold"
         android:src="@drawable/ic_action_menu_light"
+        app:tint="@android:color/white"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
         android:contentDescription="@string/menu" />
@@ -66,22 +72,28 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_action_add_light"
-        app:backgroundTint="@color/bk_red"
+        android:backgroundTint="@color/bk_red"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="100dp"
+        app:tint="@android:color/white"
+        app:backgroundTint="@color/white"
+        app:borderWidth="1dp"
         android:contentDescription="@string/create" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/filterFab"
+        android:id="@+id/editEventFab"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:src="@drawable/ic_action_filter_light"
+        android:src="@drawable/ic_action_dashboard_light"
         android:layout_marginEnd="25dp"
-        app:backgroundTint="@color/bk_red"
+        app:tint="@android:color/white"
+        android:backgroundTint="@color/bk_red"
+        app:backgroundTint="@color/white"
+        app:borderWidth="1dp"
         android:layout_marginBottom="175dp"
-        android:contentDescription="@string/filter" />
+        android:contentDescription="@string/admin_events" />
 
 </RelativeLayout>

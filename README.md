@@ -1,19 +1,22 @@
 ## Login i appen
-Det er muligt at lave sin egen konto.
- - Skriv en tilfældig email
- - Lav en adgangskode (Vi kan ikke se den)
- - Vi sletter kontoen efter reviewet er overstået
+Der kan laves en ny konto, hvis man ikke har en i forvejen:
+ - Åbn app'en
+ - Tryk på "SIGN UP"
+ - Indtast følgende info (behøver ikke at være korrekt info)
+   - Navn
+   - Telefonnummer
+   - Email
+   - Password (Minimum 6 tegn)
+ - Tryk på Sign Up
 
-## LINKS
-### Recyclerview
-https://www.geeksforgeeks.org/android-recyclerview-in-kotlin/
+## Beskrivelse
+Denne app er lavet til BK Skjold i faget 62550 	Brugerinteraktion og udvikling på mobile enheder af 
+gruppen C2, som består af følgende medlemmer:
+Isak Risager s205452
+Jens Will Iversen s205411
+Jonathan Emil Zørn s194134
+Louis Monty-Krohn s205424
+Niklas Jessen Børner s205454
 
-### Go back to prev activity
-https://stackoverflow.com/questions/4038479/android-go-back-to-previous-activity
-
-### Firebase Auth Theme
-https://stackoverflow.com/questions/44492655/customize-firebase-ui-auth-android
-
-
-## Calendar theme
-https://stackoverflow.com/questions/37301231/android-calendar-view-change-text-color
+App'en er lavet til nemt, at finde deltager til events, så som fodboldtræning, forsamlinger eller
+andre events hvor der skal findes flere deltagere.
